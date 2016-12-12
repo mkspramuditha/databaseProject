@@ -75,7 +75,11 @@ class MysqlAdapter implements DatabaseAdapter{
 
     function insert($table, array $data)
     {
-        // TODO: Implement insert() method.
+        $fields = implode(',',array_keys($data));
+        $values = implode(',', array_map(array($this, 'quoteValue'), array_values($data)));
+        $query = "INSERT INTO".$table."(".$fields.")"."VALUES(".$values.")";
+        $this->query($query);
+        return $this->getInsertId($query);
     }
 
     function update($table, array $data, $conditions)
@@ -90,7 +94,7 @@ class MysqlAdapter implements DatabaseAdapter{
 
     function getInsertId()
     {
-        // TODO: Implement getInsertId() method.
+        return $this->_link !== null ? mysqli_insert_id($this->_link) : null;
     }
 
     function countRows()
