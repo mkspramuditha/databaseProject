@@ -41,7 +41,12 @@ class MysqlAdapter implements DatabaseAdapter{
 
     function disconnect()
     {
-        // TODO: Implement disconnect() method.
+        if ($this->_link === null) {
+            return false;
+        }
+        mysqli_close($this->_link);
+        $this->_link = null;
+        return true;
     }
 
     function query($query)
@@ -59,7 +64,14 @@ class MysqlAdapter implements DatabaseAdapter{
 
     function fetch()
     {
-        // TODO: Implement fetch() method.
+        if ($this->_result !== null) {
+            if (($row = mysqli_fetch_array($this->_result, MYSQLI_ASSOC)) !== false) {
+                return $row;
+            }
+            $this->freeResult();
+            return false;
+        }
+        return null;
     }
 
     function select($table, $where="" , $conditions = "", $fields = '*', $order = "", $limit = null, $offset = null)
@@ -126,6 +138,14 @@ class MysqlAdapter implements DatabaseAdapter{
             $value = "'" . mysqli_real_escape_string($this->_link, $value) . "'";
         }
         return $value;
+    }
+
+    public function freeResult(){
+        if ($this->_result !== null) {
+            mysqli_free_result($this->_result);
+            return true;
+        }
+        return false;
     }
 
 }
