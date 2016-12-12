@@ -62,9 +62,15 @@ class MysqlAdapter implements DatabaseAdapter{
         // TODO: Implement fetch() method.
     }
 
-    function select($table, $conditions = "", $fields = '*', $order = "", $limit = null, $offset = null)
+    function select($table, $where="" , $conditions = "", $fields = '*', $order = "", $limit = null, $offset = null)
     {
-
+            $query = 'SELECT ' . $fields . ' FROM ' . $table
+                . (($where) ? ' WHERE ' . $where : "")
+               . (($limit) ? ' LIMIT ' . $limit : "")
+               . (($offset && $limit) ? ' OFFSET ' . $offset : "")
+               . (($order) ? ' ORDER BY ' . $order : "");
+            $this->query($query);
+            return $this->countRows();
     }
 
     function insert($table, array $data)
@@ -89,7 +95,7 @@ class MysqlAdapter implements DatabaseAdapter{
 
     function countRows()
     {
-        // TODO: Implement countRows() method.
+        return $this->_result !== null ? mysqli_num_rows($this->_result) : 0;
     }
 
     function getAffectedRows()
