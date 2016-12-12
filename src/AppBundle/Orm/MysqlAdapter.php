@@ -94,9 +94,11 @@ class MysqlAdapter implements DatabaseAdapter{
         return $this->getAffectedRows();
     }
 
-    function delete($table, $conditions)
+    function delete($table, $conditions='')
     {
-        // TODO: Implement delete() method.
+        $query = 'DELETE FROM'.$table.(($conditions)?'WHERE'.$conditions:'');
+        $this->query($query);
+        return $this->getAffectedRows();
     }
 
     function getInsertId()
