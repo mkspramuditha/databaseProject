@@ -79,12 +79,19 @@ class MysqlAdapter implements DatabaseAdapter{
         $values = implode(',', array_map(array($this, 'quoteValue'), array_values($data)));
         $query = "INSERT INTO".$table."(".$fields.")"."VALUES(".$values.")";
         $this->query($query);
-        return $this->getInsertId($query);
+        return $this->getInsertId();
     }
 
-    function update($table, array $data, $conditions)
+    function update($table, array $data, $conditions="")
     {
-        // TODO: Implement update() method.
+        $set = array();
+        foreach ($data as $field=>$value){
+            $set[] = $field." = ".$this->quoteValue($value);
+        }
+        $set = implode(',',$set);
+        $query = 'UPDATE'.$table.'SET'.$set.(($conditions)?'WHERE'.$conditions:'');
+        $this->query($query);
+        return $this->getAffectedRows();
     }
 
     function delete($table, $conditions)
@@ -104,8 +111,19 @@ class MysqlAdapter implements DatabaseAdapter{
 
     function getAffectedRows()
     {
-        // TODO: Implement getAffectedRows() method.
+        return $this->_link !== null ? mysqli_affected_rows($this->_link) : 0;
     }
 
+    public function quoteValue($value)
+    {
+        $this->connect();
+        if ($value === null) {
+            $value = 'NULL';
+        }
+        else if (!is_numeric($value)) {
+            $value = "'" . mysqli_real_escape_string($this->_link, $value) . "'";
+        }
+        return $value;
+    }
 
 }
