@@ -148,4 +148,9 @@ class MysqlAdapter implements DatabaseAdapter{
         return false;
     }
 
+    public function __destruct()
+    {
+        $this->disconnect();
+    }
+
 }
