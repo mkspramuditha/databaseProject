@@ -3,9 +3,10 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Orm\AbstractEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User extends AbstractEntity implements UserInterface, \Serializable
+class Users extends AbstractEntity implements UserInterface, \Serializable ,EquatableInterface
 {
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
@@ -164,6 +165,27 @@ class User extends AbstractEntity implements UserInterface, \Serializable
         // you *may* need a real salt depending on your encoder
         // see section on salt below
         return null;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof Users) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->getSalt() !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
     }
 
 
