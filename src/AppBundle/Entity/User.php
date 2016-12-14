@@ -23,6 +23,15 @@ class User extends AbstractEntity
 
     }
 
+    public function callGetMethod($name)
+    {
+        $object = $this;
+        return function() use($object, $name){
+            $args = func_get_args();
+            return call_user_func_array(array($object, $name), $args);
+        };
+    }
+
     /**
      * @return mixed
      */

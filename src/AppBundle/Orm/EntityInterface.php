@@ -8,5 +8,7 @@ interface EntityInterface{
 
     public function setRepositoryName($repository);
 
+    public function callGetMethod($name);
+
 }
 

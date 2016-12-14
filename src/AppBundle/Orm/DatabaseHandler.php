@@ -32,6 +32,12 @@ class DatabaseHandler
             return $this->_connection;
         }
 
+    public static function insert($entity){
+
+        $entity->get_method('echo_this');
+
+    }
+
     /**
      * @return string
      */

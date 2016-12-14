@@ -47,5 +47,7 @@ Abstract class AbstractEntity implements EntityInterface
         $this->_fieldNames = $fieldNames;
     }
 
+    public abstract function callGetMethod($name);
+
 
 }
