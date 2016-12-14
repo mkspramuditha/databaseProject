@@ -13,6 +13,7 @@ Abstract class AbstractEntity implements EntityInterface
 {
     private $_tableName;
     private $_repositoryName;
+    private $_fieldNames;
 
     /**
      * @param mixed $tableName
@@ -28,6 +29,22 @@ Abstract class AbstractEntity implements EntityInterface
     public function setRepositoryName($repositoryName)
     {
         $this->_repositoryName = $repositoryName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFieldNames()
+    {
+        return $this->_fieldNames;
+    }
+
+    /**
+     * @param mixed $fieldNames
+     */
+    public function setFieldNames($fieldNames)
+    {
+        $this->_fieldNames = $fieldNames;
     }
 
 

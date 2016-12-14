@@ -8,6 +8,7 @@ class User extends AbstractEntity
 {
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
+    private $_fieldNames = ['Username','Password','Email'];
 
     private $username;
     private $password;
@@ -18,6 +19,8 @@ class User extends AbstractEntity
     {
         $this->setTableName($this->_tableName);
         $this->setRepositoryName($this->_repositoryName);
+        $this->setFieldNames($this->_fieldNames);
+
     }
 
     /**
@@ -67,4 +70,21 @@ class User extends AbstractEntity
     {
         $this->email = $email;
     }
+
+    /**
+     * @return array
+     */
+    public function getFieldNames()
+    {
+        return $this->_fieldNames;
+    }
+
+    /**
+     * @param array $fieldNames
+     */
+    public function setFieldNames($fieldNames)
+    {
+        $this->_fieldNames = $fieldNames;
+    }
+
 }
