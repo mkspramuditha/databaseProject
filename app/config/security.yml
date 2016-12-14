@@ -4,7 +4,8 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        our_db_provider:
+        webservice:
+          id: app.entity_user_provider
           entity:
             class: AppBundle:Users
             property: username
@@ -24,13 +25,13 @@ security:
             anonymous: ~
             http_basic: ~
             form_login:
-                login_path: /admin/login
-                check_path: /admin/login
-                default_target_path: /admin/dashboard
+                login_path: /login
+                check_path: /login
+                default_target_path: /dashboard
             logout:
-                path: /admin/logout
-                target : /admin/login
-            provider: our_db_provider
+                path: /logout
+                target : /login
+            provider: webservice
 
     access_control:
         # require ROLE_ADMIN for /admin*
