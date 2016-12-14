@@ -25,9 +25,9 @@ class DefaultController extends Controller
 
         $myUser = new Users();
         $myUser->setUsername('ashan');
-//        $encoder = $this->container->get('security.password_encoder');
-//        $encoded = $encoder->encodePassword('ashan');
-        $myUser->setPassword("ashan");
+        $encoder = $this->container->get('security.password_encoder');
+        $encoded = $encoder->encodePassword($myUser,'ashan');
+        $myUser->setPassword($encoded);
         $myUser->setEmail('ashan@gmail.com');
         DatabaseHandler::insert($myUser);
 

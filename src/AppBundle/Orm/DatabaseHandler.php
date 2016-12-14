@@ -46,9 +46,7 @@ class DatabaseHandler
         $values = implode(',', array_map(array(self::getInstance(), 'quoteValue'), array_values($values)));
         $connection = self::getInstance()->connect();
         $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ')';
-        var_dump($query);
         mysqli_query($connection, $query);
-        var_dump($connection->error);
     }
 
     public static function update($entity){
