@@ -5,10 +5,7 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         webservice:
-          id: app.entity_user_provider
-          entity:
-            class: AppBundle:Users
-            property: username
+            id: app.entity_user_provider
     encoders:
         AppBundle\Entity\Users:
           algorithm: bcrypt
@@ -35,5 +32,5 @@ security:
 
     access_control:
         # require ROLE_ADMIN for /admin*
-      - { path: ^/admin/dashboard, roles: ROLE_ADMIN }
+      - { path: ^/dashboard, roles: ROLE_ADMIN }
 
