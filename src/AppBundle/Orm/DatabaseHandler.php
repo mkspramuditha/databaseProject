@@ -14,7 +14,7 @@ use SensioLabs\Security\Exception\RuntimeException;
 class DatabaseHandler
 {
     private  $_host = "localhost";
-    private  $_databaseName = "dbProject";
+    private  $_databaseName = "databaseProject";
     private  $_databaseUser = "root";
     private  $_databasePassword = null;
 
@@ -34,7 +34,15 @@ class DatabaseHandler
 
     public static function insert($entity){
 
-        $entity->get_method('echo_this');
+//        $entity->get_method('echo_this');
+
+    }
+
+    public static function update($entity){
+
+    }
+
+    public static function delete($entity){
 
     }
 
