@@ -19,6 +19,7 @@ class DatabaseHandler
     private  $_databasePassword = null;
 
     private $_connection;
+    private static $_dbConnect;
 
     public function connect()
         {
@@ -44,6 +45,13 @@ class DatabaseHandler
 
     public static function delete($entity){
 
+    }
+
+    public static function getInstance(){
+        if(self::$_dbConnect ==null){
+            self::$_dbConnect = new DatabaseHandler();
+        }
+        return self::$_dbConnect;
     }
 
     /**
