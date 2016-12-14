@@ -35,15 +35,9 @@ class DatabaseHandler
 
     public static function insert($entity){
         $table = $entity->getTableName();
-        $fieldNames = $entity->getFieldNames();
+
         $tableColumnNames = implode(',',$entity->getColumnNames());
-        $values = [];
-        foreach ($fieldNames as $field){
-            $method = $entity->callGetMethod('get'.$field);
-            $values [] = $method();
-        }
-//        $entity->get_method('echo_this');
-        $values = implode(',', array_map(array(self::getInstance(), 'quoteValue'), array_values($values)));
+        $values = self::getValuesFromEntity($entity);
         $connection = self::getInstance()->connect();
         $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ')';
         mysqli_query($connection, $query);
@@ -62,6 +56,21 @@ class DatabaseHandler
             self::$_dbConnect = new DatabaseHandler();
         }
         return self::$_dbConnect;
+    }
+
+    public function getValuesFromEntity($entity)
+    {
+        $fieldNames = $entity->getFieldNames();
+
+        $values = [];
+        foreach ($fieldNames as $field){
+            $method = $entity->callGetMethod('get'.$field);
+            $values [] = $method();
+        }
+//        $entity->get_method('echo_this');
+        $values = implode(',', array_map(array(self::getInstance(), 'quoteValue'), array_values($values)));
+
+        return $values;
     }
 
 
