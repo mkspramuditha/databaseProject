@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,6 +22,14 @@ class DefaultController extends Controller
         $token = $this->get('security.token_storage')->getToken();
 
         $user = $token->getUser();
+
+        $myUser = new Users();
+        $myUser->setUsername('ashan');
+//        $encoder = $this->container->get('security.password_encoder');
+//        $encoded = $encoder->encodePassword('ashan');
+        $myUser->setPassword("ashan");
+        $myUser->setEmail('ashan@gmail.com');
+        DatabaseHandler::insert($myUser);
 
 
 

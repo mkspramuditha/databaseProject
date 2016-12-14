@@ -11,6 +11,7 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
     private $_fieldNames = ['Username','Password','Email'];
+    private $_columnNames = ['username','password','email'];
 
     private $id;
     private $username;
@@ -37,11 +38,59 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
     }
 
     /**
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->_tableName;
+    }
+
+    /**
+     * @param string $tableName
+     */
+    public function setTableName($tableName)
+    {
+        $this->_tableName = $tableName;
+    }
+
+    /**
      * @return mixed
      */
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepositoryName()
+    {
+        return $this->_repositoryName;
+    }
+
+    /**
+     * @param string $repositoryName
+     */
+    public function setRepositoryName($repositoryName)
+    {
+        $this->_repositoryName = $repositoryName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getColumnNames()
+    {
+        return $this->_columnNames;
+    }
+
+    /**
+     * @param array $columnNames
+     */
+    public function setColumnNames($columnNames)
+    {
+        $this->_columnNames = $columnNames;
     }
 
     /**

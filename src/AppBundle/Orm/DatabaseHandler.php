@@ -34,9 +34,21 @@ class DatabaseHandler
         }
 
     public static function insert($entity){
-
+        $table = $entity->getTableName();
+        $fieldNames = $entity->getFieldNames();
+        $tableColumnNames = implode(',',$entity->getColumnNames());
+        $values = [];
+        foreach ($fieldNames as $field){
+            $method = $entity->callGetMethod('get'.$field);
+            $values [] = $method();
+        }
 //        $entity->get_method('echo_this');
-
+        $values = implode(',', array_map(array(self::getInstance(), 'quoteValue'), array_values($values)));
+        $connection = self::getInstance()->connect();
+        $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ')';
+        var_dump($query);
+        mysqli_query($connection, $query);
+        var_dump($connection->error);
     }
 
     public static function update($entity){
@@ -54,6 +66,18 @@ class DatabaseHandler
         return self::$_dbConnect;
     }
 
+
+    public function quoteValue($value)
+    {
+        $this->connect();
+        if ($value === null) {
+            $value = 'NULL';
+        }
+        else if (!is_numeric($value)) {
+            $value = "'" . mysqli_real_escape_string($this->_connection, $value) . "'";
+        }
+        return $value;
+    }
     /**
      * @return string
      */
