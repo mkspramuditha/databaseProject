@@ -44,7 +44,7 @@ class UsersRepository extends AbstractRepository
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
-        $this->setObject($row);
+        return $this->setObject($row);
 
     }
 
