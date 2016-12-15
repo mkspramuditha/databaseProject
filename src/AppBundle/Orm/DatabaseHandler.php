@@ -95,18 +95,30 @@ class DatabaseHandler
     public function query($query){
         $connection = $this->connect();
         $results = mysqli_query($connection,$query);
+//        var_dump($connection->error);
         return $results;
     }
 
     public function fetch(){
-        if ($this->_result !== null) {
-            if (($row = mysqli_fetch_array($this->_result, MYSQLI_ASSOC)) === false) {
-                $this->freeResult();
+        if(mysqli_num_rows($this->_result)){
+            $resultArr = [];
+            while($row = mysqli_fetch_assoc($this->_result)){
+                $resultArr[] = $row;
             }
-            return $row;
+            return $resultArr;
         }
-        return false;
+        else{
+            if ($this->_result !== null) {
+                if (($row = mysqli_fetch_array($this->_result, MYSQLI_ASSOC)) === false) {
+                    $this->freeResult();
+                }
+                return $row;
+            }
+            return false;
+        }
+
     }
+
 
     public function freeResult()
     {

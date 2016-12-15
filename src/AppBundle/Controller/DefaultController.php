@@ -35,7 +35,10 @@ class DefaultController extends Controller
 //        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
 //        $this->db()->insert($myUser);
 
-        $user = UsersRepository::getInstance()->findOneBy(array('username'),array('shan'));
+//        $user = UsersRepository::getInstance()->findOneBy(array('username'),array('shan'));
+
+        $user = UsersRepository::getInstance()->findAll();
+//        var_dump($user[0]->getId());
 
 //        var_dump($user->getUsername());
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');

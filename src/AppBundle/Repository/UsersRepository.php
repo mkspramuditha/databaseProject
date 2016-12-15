@@ -44,12 +44,25 @@ class UsersRepository extends AbstractRepository
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
+
         return $this->setObject($row);
 
     }
 
     public function findAll()
     {
+        $table = $this->_tableName;
+        $DBInstance = DatabaseHandler::getInstance();
+        $query = 'SELECT * FROM '.$table;
+        $results = $DBInstance->query($query);
+        $DBInstance->setResult($results);
+        $row = $DBInstance->fetch();
+        $resultArray= [];
+        foreach ($row as $item){
+            $resultArray[] = $this->setObject($item);
+        }
+
+        return $resultArray;
 
     }
 
