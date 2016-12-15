@@ -68,6 +68,22 @@ class UsersRepository extends AbstractRepository
 
     public function findBy($field, $values)
     {
+        $table = $this->_tableName;
+        $DBInstance = DatabaseHandler::getInstance();
+        $tableField = implode(',',$field);
+        $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
+        $query = 'SELECT * FROM ' . $table . ' WHERE ('. $tableField .') = ('. $values .') ';
+        $results = $DBInstance->query($query);
+        $DBInstance->setResult($results);
+//        var_dump($DBInstance->getResult());
+        $row = $DBInstance->fetch();
+//        var_dump($row);
+        $resultArray= [];
+        foreach ($row as $item){
+            $resultArray[] = $this->setObject($item);
+        }
+
+        return $resultArray;
 
     }
 

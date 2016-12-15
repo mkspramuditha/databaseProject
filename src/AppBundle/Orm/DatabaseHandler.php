@@ -96,11 +96,12 @@ class DatabaseHandler
         $connection = $this->connect();
         $results = mysqli_query($connection,$query);
 //        var_dump($connection->error);
+
         return $results;
     }
 
     public function fetch(){
-        if(mysqli_num_rows($this->_result)){
+        if(mysqli_num_rows($this->_result)>1){
             $resultArr = [];
             while($row = mysqli_fetch_assoc($this->_result)){
                 $resultArr[] = $row;
