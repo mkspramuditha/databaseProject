@@ -32,8 +32,7 @@ class DefaultController extends Controller
         $encoded = $encoder->encodePassword($myUser,'mks');
         $myUser->setPassword($encoded);
         $myUser->setEmail('pramuditha.14@cse.mrt.ac.lk');
-        DatabaseHandler::getInstance()->insert($myUser);
-
+        $this->db()->delete($myUser);
 
 
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');
@@ -63,5 +62,9 @@ class DefaultController extends Controller
     {
         var_dump('dashboard');
         exit;
+    }
+
+    public function db(){
+        return DatabaseHandler::getInstance();
     }
 }

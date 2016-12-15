@@ -40,7 +40,7 @@ class DatabaseHandler
         $values = $this->getValuesFromEntity($entity);
         $connection = $this->getInstance()->connect();
         $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ')';
-        mysqli_query($connection, $query);
+        $this->query($query);
     }
 
     public function update($entity){
@@ -48,18 +48,16 @@ class DatabaseHandler
 
         $tableColumnNames = implode(',',$entity->getColumnNames());
         $values = self::getInstance()->getValuesFromEntity($entity);
-        $connection = self::getInstance()->connect();
         $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ') WHERE id ="1"';
-        mysqli_query($connection, $query);
-        var_dump($connection->error);
     }
 
     public function delete($entity){
 
         $table = $entity->getTableName();
 
-        $query = 'DELETE FROM ' . $table . 'WHERE id ='.$entity->getId();
-        return $this->getAffectedRows();
+        $query = 'DELETE FROM ' . $table . ' WHERE id ='. $entity->getId() .' ';
+        var_dump($query);
+        $this->query($query);
     }
 
     public static function getInstance(){
@@ -95,6 +93,13 @@ class DatabaseHandler
             $value = "'" . mysqli_real_escape_string($this->_connection, $value) . "'";
         }
         return $value;
+    }
+
+    public function query($query){
+        $connection = $this->connect();
+        mysqli_query($connection,$query);
+        var_dump($connection->error);
+
     }
 
 
