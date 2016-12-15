@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
+use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,15 +26,16 @@ class DefaultController extends Controller
 
         $user = $token->getUser();
 
-        $myUser = new Users();
-//        $myUser->setId(5);
-        $myUser->setUsername('shan');
-        $encoder = $this->container->get('security.password_encoder');
-        $encoded = $encoder->encodePassword($myUser,'pramuditha');
-        $myUser->setPassword($encoded);
-        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
-        $this->db()->insert($myUser);
+//        $myUser = new Users();
+////        $myUser->setId(5);
+//        $myUser->setUsername('shan');
+//        $encoder = $this->container->get('security.password_encoder');
+//        $encoded = $encoder->encodePassword($myUser,'pramuditha');
+//        $myUser->setPassword($encoded);
+//        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
+//        $this->db()->insert($myUser);
 
+        UsersRepository::getInstance()->findOneBy(array('username'),array('shan'));
 
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');
         if($isRoleAdmin)

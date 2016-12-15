@@ -20,6 +20,7 @@ class DatabaseHandler
 
     private $_connection;
     private static $_dbConnect;
+    private $_result;
 
     public function connect()
         {
@@ -93,9 +94,27 @@ class DatabaseHandler
 
     public function query($query){
         $connection = $this->connect();
-        mysqli_query($connection,$query);
-        var_dump($connection->error);
+        $results = mysqli_query($connection,$query);
+        return $results;
+    }
 
+    public function fetch(){
+        if ($this->_result !== null) {
+            if (($row = mysqli_fetch_array($this->_result, MYSQLI_ASSOC)) === false) {
+                $this->freeResult();
+            }
+            return $row;
+        }
+        return false;
+    }
+
+    public function freeResult()
+    {
+        if ($this->_result === null) {
+            return false;
+        }
+        mysqli_free_result($this->_result);
+        return true;
     }
 
 
@@ -177,6 +196,22 @@ class DatabaseHandler
     public function setConnection($connection)
     {
         $this->_connection = $connection;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->_result;
+    }
+
+    /**
+     * @param mixed $result
+     */
+    public function setResult($result)
+    {
+        $this->_result = $result;
     }
 
 

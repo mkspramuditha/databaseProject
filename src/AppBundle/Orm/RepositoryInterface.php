@@ -6,7 +6,7 @@ Interface RepositoryInterface{
 
     public function setTableName($table);
 
-    public function setEntityName($repository);
+    public function setEntityName($entity);
 
     public function callSetMethod($name);
 
