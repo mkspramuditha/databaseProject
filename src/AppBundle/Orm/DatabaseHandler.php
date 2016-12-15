@@ -101,23 +101,25 @@ class DatabaseHandler
     }
 
     public function fetch(){
-        if(mysqli_num_rows($this->_result)>1){
-            $resultArr = [];
-            while($row = mysqli_fetch_assoc($this->_result)){
-                $resultArr[] = $row;
-            }
-            return $resultArr;
-        }
-        else{
-            if ($this->_result !== null) {
+        if ($this->_result !== null) {
                 if (($row = mysqli_fetch_array($this->_result, MYSQLI_ASSOC)) === false) {
                     $this->freeResult();
                 }
                 return $row;
             }
             return false;
-        }
+    }
 
+    public function fetchArray(){
+
+        if ($this->_result !== null) {
+            $resultArr = [];
+            while($row = mysqli_fetch_assoc($this->_result)){
+                $resultArr[] = $row;
+            }
+            return $resultArr;
+        }
+        return false;
     }
 
 

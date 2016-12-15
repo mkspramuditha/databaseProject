@@ -56,7 +56,7 @@ class UsersRepository extends AbstractRepository
         $query = 'SELECT * FROM '.$table.' JOIN roles ON users.role = roles.id';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
-        $row = $DBInstance->fetch();
+        $row = $DBInstance->fetchArray();
         $resultArray= [];
         foreach ($row as $item){
             $resultArray[] = $this->setObject($item);
@@ -76,7 +76,7 @@ class UsersRepository extends AbstractRepository
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
-        $row = $DBInstance->fetch();
+        $row = $DBInstance->fetchArray();
 //        var_dump($row);
         $resultArray= [];
         foreach ($row as $item){
@@ -100,6 +100,7 @@ class UsersRepository extends AbstractRepository
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
+        $user->setRoles(array($row['roleId']));
          return $user;
     }
 }
