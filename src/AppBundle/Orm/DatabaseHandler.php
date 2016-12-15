@@ -33,22 +33,33 @@ class DatabaseHandler
             return $this->_connection;
         }
 
-    public static function insert($entity){
+    public function insert($entity){
         $table = $entity->getTableName();
 
         $tableColumnNames = implode(',',$entity->getColumnNames());
-        $values = self::getValuesFromEntity($entity);
-        $connection = self::getInstance()->connect();
+        $values = $this->getValuesFromEntity($entity);
+        $connection = $this->getInstance()->connect();
         $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ')';
         mysqli_query($connection, $query);
     }
 
-    public static function update($entity){
+    public function update($entity){
+        $table = $entity->getTableName();
 
+        $tableColumnNames = implode(',',$entity->getColumnNames());
+        $values = self::getInstance()->getValuesFromEntity($entity);
+        $connection = self::getInstance()->connect();
+        $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ') WHERE id ="1"';
+        mysqli_query($connection, $query);
+        var_dump($connection->error);
     }
 
-    public static function delete($entity){
+    public function delete($entity){
 
+        $table = $entity->getTableName();
+
+        $query = 'DELETE FROM ' . $table . 'WHERE id ='.$entity->getId();
+        return $this->getAffectedRows();
     }
 
     public static function getInstance(){
@@ -85,6 +96,8 @@ class DatabaseHandler
         }
         return $value;
     }
+
+
     /**
      * @return string
      */

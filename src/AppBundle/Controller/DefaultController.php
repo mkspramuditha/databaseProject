@@ -7,6 +7,8 @@ use AppBundle\Orm\DatabaseHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class DefaultController extends Controller
 {
@@ -24,12 +26,13 @@ class DefaultController extends Controller
         $user = $token->getUser();
 
         $myUser = new Users();
-        $myUser->setUsername('ashan');
+        $myUser->setId(1);
+        $myUser->setUsername('mkspramuditha');
         $encoder = $this->container->get('security.password_encoder');
-        $encoded = $encoder->encodePassword($myUser,'ashan');
+        $encoded = $encoder->encodePassword($myUser,'mks');
         $myUser->setPassword($encoded);
-        $myUser->setEmail('ashan@gmail.com');
-        DatabaseHandler::insert($myUser);
+        $myUser->setEmail('pramuditha.14@cse.mrt.ac.lk');
+        DatabaseHandler::getInstance()->insert($myUser);
 
 
 
