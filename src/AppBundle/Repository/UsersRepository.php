@@ -53,7 +53,7 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM '.$table;
+        $query = 'SELECT * FROM '.$table.'JOIN roles ON users.role = roles.id';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
