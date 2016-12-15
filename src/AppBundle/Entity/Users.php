@@ -10,8 +10,8 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
 {
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
-    private $_fieldNames = ['Username','Password','Email'];
-    private $_columnNames = ['username','password','email'];
+    private $_fieldNames = ['Id','Username','Password','Email'];
+    private $_columnNames = ['id','username','password','email'];
 
     private $id;
     private $username;

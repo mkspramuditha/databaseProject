@@ -26,13 +26,13 @@ class DefaultController extends Controller
         $user = $token->getUser();
 
         $myUser = new Users();
-        $myUser->setId(1);
-        $myUser->setUsername('mkspramuditha');
+//        $myUser->setId(5);
+        $myUser->setUsername('shan');
         $encoder = $this->container->get('security.password_encoder');
-        $encoded = $encoder->encodePassword($myUser,'mks');
+        $encoded = $encoder->encodePassword($myUser,'pramuditha');
         $myUser->setPassword($encoded);
-        $myUser->setEmail('pramuditha.14@cse.mrt.ac.lk');
-        $this->db()->delete($myUser);
+        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
+        $this->db()->insert($myUser);
 
 
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');

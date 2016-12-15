@@ -38,17 +38,13 @@ class DatabaseHandler
 
         $tableColumnNames = implode(',',$entity->getColumnNames());
         $values = $this->getValuesFromEntity($entity);
-        $connection = $this->getInstance()->connect();
         $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ')';
         $this->query($query);
     }
 
     public function update($entity){
-        $table = $entity->getTableName();
-
-        $tableColumnNames = implode(',',$entity->getColumnNames());
-        $values = self::getInstance()->getValuesFromEntity($entity);
-        $query = 'INSERT INTO ' . $table . ' (' . $tableColumnNames . ') ' . ' VALUES (' . $values . ') WHERE id ="1"';
+        $this->delete($entity);
+        $this->insert($entity);
     }
 
     public function delete($entity){
