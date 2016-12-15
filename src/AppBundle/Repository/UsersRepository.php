@@ -40,7 +40,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',',$field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' WHERE ('. $tableField .') = ('. $values .') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id WHERE ('. $tableField .') = ('. $values .') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,7 +53,7 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM '.$table.'JOIN roles ON users.role = roles.id';
+        $query = 'SELECT * FROM '.$table.' JOIN roles ON users.role = roles.id';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -72,7 +72,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',',$field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' WHERE ('. $tableField .') = ('. $values .') ';
+        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id WHERE ('. $tableField .') = ('. $values .') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
