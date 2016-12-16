@@ -23,13 +23,17 @@ class ApiController extends DefaultController
     }
 
     protected function objectSerialize($object){
-        //some encoding here
+
         return json_encode($object);
     }
 
     protected function objectDeserialize($text){
-        // some decoding here
+
         return json_decode($text);
+    }
+
+    protected function isAPIAuthenticated($user){
+
     }
 
 
@@ -40,10 +44,5 @@ class ApiController extends DefaultController
     {
         return new Response("<h2>Hii</h2>");
     }
-
-
-
-
-
 
 }
