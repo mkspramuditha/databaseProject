@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 
 /**
  * @Route("/api")
@@ -42,7 +44,9 @@ class ApiController extends DefaultController
      */
     public function apiRegisterAction(Request $request)
     {
-        return new Response("<h2>Hii</h2>");
+        $requestObject = $request->get('obj');
+        $register = $this->objectDeserialize($requestObject);
+        return new Response($register->id);
     }
 
 }
