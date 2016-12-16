@@ -49,4 +49,35 @@ class ApiController extends DefaultController
         return new Response($register->id);
     }
 
+
+    /**
+     * @Route("/login", name="apiLogin")
+     */
+    public function apiLoginAction(Request $request)
+    {
+        $requestObject = $request->get('obj');
+        $register = $this->objectDeserialize($requestObject);
+        return new Response($register->id);
+    }
+
+    /**
+     * @Route("/sync/up", name="apiSyncUp")
+     */
+    public function apiSyncUpAction(Request $request)
+    {
+        $requestObject = $request->get('obj');
+        $register = $this->objectDeserialize($requestObject);
+        return new Response($register->id);
+    }
+
+    /**
+     * @Route("/sync/down", name="apiSyncDown")
+     */
+    public function apiSyncDownAction(Request $request)
+    {
+        $requestObject = $request->get('obj');
+        $register = $this->objectDeserialize($requestObject);
+        return new Response($register->id);
+    }
+
 }
