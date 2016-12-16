@@ -32,5 +32,5 @@ security:
 
     access_control:
         # require ROLE_ADMIN for /admin*
-      - { path: ^/dashboard, roles: ROLE_ADMIN }
+      - { path: ^/admin, roles: ROLE_ADMIN }
 
