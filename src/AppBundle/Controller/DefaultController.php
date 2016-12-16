@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DiseaseData;
+use AppBundle\Entity\EntryDetails;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
 use AppBundle\Repository\DiseaseDataRepository;
+use AppBundle\Repository\EntryDetailsRepository;
 use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,21 +31,16 @@ class DefaultController extends Controller
 
         $user = $token->getUser();
 //============================================================================================
-//        $disease = new DiseaseData();
-//        $disease->setId(1);
-//        $disease->setUserid('shan');
-//        $disease->setDiseasedataid('d01');
-//        $disease->setSymptoms('puka ridenawa');
-//        $disease->setDescription('thiyanawa');
-//        $disease->setVictimcount(213);
-//        $disease->setLocationcode('81000');
-//        $disease->setEntryid('e01');
-//        $this->db()->update($disease);
-//
+//        $entry = new EntryDetails();
+//        $entry->setId(6);
+//        $entry->setEntryid('entry02');
+//        $entry->setDatetime('2016-11-11 12:24:18');
+//        $this->db()->update($entry);
+
 
 
 //
-        $disease = DiseaseDataRepository::getInstance()->findOneBy(array('diseasedataid'),array('d01'));
+//        $disease = EntryDetailsRepository::getInstance()->findBy(array('entryid'),array('entry02'));
 //
 
         //================================================================================================
