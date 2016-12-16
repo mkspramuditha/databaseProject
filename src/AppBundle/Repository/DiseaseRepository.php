@@ -9,14 +9,14 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\Users;
+use AppBundle\Entity\Disease;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
 
-class UsersRepository extends AbstractRepository
+class DiseaseRepository extends AbstractRepository
 {
-    protected $_tableName = "users";
-    protected $_entityName = "Users";
+    protected $_tableName = "disease";
+    protected $_entityName = "Disease";
     public static $instance;
 
     public function setTableName($table)
@@ -38,9 +38,9 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $tableField = implode(',',$field);
+        $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id WHERE ('. $tableField .') = ('. $values .') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON disease.locationid = location.locationid  JOIN diseaseentry ON disease.entryid= diseaseentry.entryid JOIN users ON disease.username = users.username WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,12 +53,12 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM '.$table.' JOIN roles ON users.role = roles.id';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON disease.locationid = location.locationid  JOIN diseaseentry ON disease.entryid= diseaseentry.entryid JOIN users ON disease.username = users.username';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
-        $resultArray= [];
-        foreach ($row as $item){
+        $resultArray = [];
+        foreach ($row as $item) {
             $resultArray[] = $this->setObject($item);
         }
 
@@ -70,16 +70,16 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $tableField = implode(',',$field);
+        $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id WHERE ('. $tableField .') = ('. $values .') ';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON disease.locationid = location.locationid  JOIN diseaseentry ON disease.entryid= diseaseentry.entryid JOIN users ON disease.username = users.username WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
         $row = $DBInstance->fetchArray();
 //        var_dump($row);
-        $resultArray= [];
-        foreach ($row as $item){
+        $resultArray = [];
+        foreach ($row as $item) {
             $resultArray[] = $this->setObject($item);
         }
 
@@ -87,20 +87,26 @@ class UsersRepository extends AbstractRepository
 
     }
 
-    public static function getInstance(){
-        if(self::$instance == null){
-            self::$instance = new UsersRepository();
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new DiseaseRepository();
         }
         return self::$instance;
     }
 
-    public function setObject($row){
-        $user = new Users();
-        $user->setId($row['id']);
-        $user->setUsername($row['username']);
-        $user->setPassword($row['password']);
-        $user->setEmail($row['email']);
-        $user->setRoles(array($row['roleId']));
-         return $user;
+    public function setObject($row)
+    {
+
+        $disease = new Disease();
+        $disease->setUserid($row['userid']);
+        $disease->setDiseaseid($row['diseaseid']);
+        $disease->setSymptoms($row['symptoms']);
+        $disease->setDescription($row['description']);
+        $disease->setVictimcount($row['victimcount']);
+        $disease->setLocationid($row['locationid']);
+        $disease->setEntryid($row['entryid']);
+
+        return $disease;
     }
 }

@@ -22,6 +22,134 @@ class Disease extends AbstractEntity
     private $locationid;
     private $entryid;
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserid()
+    {
+        return $this->userid;
+    }
+
+    /**
+     * @param mixed $userid
+     */
+    public function setUserid($userid)
+    {
+        $this->userid = $userid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiseaseid()
+    {
+        return $this->diseaseid;
+    }
+
+    /**
+     * @param mixed $diseaseid
+     */
+    public function setDiseaseid($diseaseid)
+    {
+        $this->diseaseid = $diseaseid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSymptoms()
+    {
+        return $this->symptoms;
+    }
+
+    /**
+     * @param mixed $symptoms
+     */
+    public function setSymptoms($symptoms)
+    {
+        $this->symptoms = $symptoms;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVictimcount()
+    {
+        return $this->victimcount;
+    }
+
+    /**
+     * @param mixed $victimcount
+     */
+    public function setVictimcount($victimcount)
+    {
+        $this->victimcount = $victimcount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocationid()
+    {
+        return $this->locationid;
+    }
+
+    /**
+     * @param mixed $locationid
+     */
+    public function setLocationid($locationid)
+    {
+        $this->locationid = $locationid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntryid()
+    {
+        return $this->entryid;
+    }
+
+    /**
+     * @param mixed $entryid
+     */
+    public function setEntryid($entryid)
+    {
+        $this->entryid = $entryid;
+    }
+
 
     public function __construct()
     {
