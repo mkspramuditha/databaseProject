@@ -25,25 +25,26 @@ class DefaultController extends Controller
         $token = $this->get('security.token_storage')->getToken();
 
         $user = $token->getUser();
-
+//============================================================================================
 //        $myUser = new Users();
-////      $myUser->setId(5);
+//        $myUser->setId(5);
 //        $myUser->setUsername('shan');
 //        $encoder = $this->container->get('security.password_encoder');
-//        $encoded = $encoder->encodePassword($myUser,'pramuditha');
+//        $encoded = $encoder->encodePassword($myUser, 'pramuditha');
 //        $myUser->setPassword($encoded);
 //        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
 //        $this->db()->insert($myUser);
-
+//
 //        $user = UsersRepository::getInstance()->findBy(array('username'),array('shan'));
-
+//
 //        $user = UsersRepository::getInstance()->findAll();
 //        var_dump($user[0]->getRoles());
-
+//
 //        var_dump($user->getUsername());
+
+        //================================================================================================
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');
-        if($isRoleAdmin)
-        {
+        if ($isRoleAdmin) {
             return $this->redirect(
                 $this->generateUrl("adminDashboard")
             );
@@ -51,11 +52,11 @@ class DefaultController extends Controller
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        $error =$authenticationUtils->getLastAuthenticationError();
+        $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUserName();
-        return $this->render('default/adminLogin.html.twig',array(
-            'last_username' =>$lastUsername,
-            'error'=>$error
+        return $this->render('default/adminLogin.html.twig', array(
+            'last_username' => $lastUsername,
+            'error' => $error
         ));
 
     }
@@ -69,7 +70,8 @@ class DefaultController extends Controller
         exit;
     }
 
-    public function db(){
+    public function db()
+    {
         return DatabaseHandler::getInstance();
     }
 }
