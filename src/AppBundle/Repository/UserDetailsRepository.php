@@ -9,14 +9,15 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\Users;
+
+use AppBundle\Entity\UserDetials;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
 
-class UsersRepository extends AbstractRepository
+class UserDetialsRepository extends AbstractRepository
 {
-    protected $_tableName = "users";
-    protected $_entityName = "Users";
+    protected $_tableName = "userdetials";
+    protected $_entityName = "UserDetials";
     public static $instance;
 
     public function setTableName($table)
@@ -38,9 +39,9 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $tableField = implode(',',$field);
+        $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE ('. $tableField .') = ('. $values .') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,12 +54,12 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM '.$table.' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid';
+        $query = 'SELECT * FROM ' . $table;
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
-        $resultArray= [];
-        foreach ($row as $item){
+        $resultArray = [];
+        foreach ($row as $item) {
             $resultArray[] = $this->setObject($item);
         }
 
@@ -70,16 +71,16 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $tableField = implode(',',$field);
+        $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE ('. $tableField .') = ('. $values .') ';
+        $query = 'SELECT * FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
         $row = $DBInstance->fetchArray();
 //        var_dump($row);
-        $resultArray= [];
-        foreach ($row as $item){
+        $resultArray = [];
+        foreach ($row as $item) {
             $resultArray[] = $this->setObject($item);
         }
 
@@ -87,20 +88,28 @@ class UsersRepository extends AbstractRepository
 
     }
 
-    public static function getInstance(){
-        if(self::$instance == null){
-            self::$instance = new UsersRepository();
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new UserDetialsRepository();
         }
         return self::$instance;
     }
 
-    public function setObject($row){
-        $user = new Users();
-        $user->setId($row['id']);
-        $user->setUsername($row['username']);
-        $user->setPassword($row['password']);
-        $user->setEmail($row['email']);
-        $user->setRoles(array($row['roleId']));
-         return $user;
+    public function setObject($row)
+    {
+
+
+        $userdetials = new UserDetials();
+        $userdetials->setId($row['id']);
+        $userdetials->setUserid($row['userid']);
+        $userdetials->setFirstname($row['firstname']);
+        $userdetials->setMiddlename($row['middlename']);
+        $userdetials->setLastname($row['lastname']);
+        $userdetials->setPhone($row['phone']);
+        $userdetials->setEmail($row['email']);
+
+
+        return $userdetials;
     }
 }
