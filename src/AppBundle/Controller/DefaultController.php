@@ -22,7 +22,6 @@ class DefaultController extends Controller
 
         $auth_checker = $this->get('security.authorization_checker');
 
-
         $token = $this->get('security.token_storage')->getToken();
 
         $user = $token->getUser();
@@ -62,7 +61,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/dashboard", name="adminDashboard")
+     * @Route("/dashboard", name="adminDashboard1")
      */
     public function dashboardAction(Request $request)
     {
@@ -72,5 +71,23 @@ class DefaultController extends Controller
 
     public function db(){
         return DatabaseHandler::getInstance();
+    }
+
+    public function getUser()
+    {
+        if (!$this->container->has('security.token_storage')) {
+            throw new \LogicException('The SecurityBundle is not registered in your application.');
+        }
+
+        if (null === $token = $this->container->get('security.token_storage')->getToken()) {
+            return;
+        }
+
+        if (!is_object($user = $token->getUser())) {
+            // e.g. anonymous authentication
+            return;
+        }
+
+        return $user;
     }
 }

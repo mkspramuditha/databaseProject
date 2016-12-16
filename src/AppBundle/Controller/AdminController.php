@@ -12,12 +12,15 @@ class AdminController extends DefaultController
 {
 
     /**
-     * @Route("/test", name="test")
+     * @Route("admin/dashboard", name="adminDashboard")
      */
 
     public function adminDashboardAction(Request $request){
+        $user = $this->getUser();
 
-        return $this->render('baseBackend.html.twig');
+        return $this->render('default/adminDashboard.html.twig',array(
+            'user'=>$user
+        ));
 
     }
 }
