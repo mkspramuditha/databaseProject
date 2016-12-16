@@ -27,7 +27,7 @@ class DefaultController extends Controller
         $user = $token->getUser();
 
 //        $myUser = new Users();
-////        $myUser->setId(5);
+////      $myUser->setId(5);
 //        $myUser->setUsername('shan');
 //        $encoder = $this->container->get('security.password_encoder');
 //        $encoded = $encoder->encodePassword($myUser,'pramuditha');
@@ -48,7 +48,6 @@ class DefaultController extends Controller
                 $this->generateUrl("adminDashboard")
             );
         }
-
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
