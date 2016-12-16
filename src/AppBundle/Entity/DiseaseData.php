@@ -6,20 +6,20 @@ use AppBundle\Orm\AbstractEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Disease extends AbstractEntity
+class DiseaseData extends AbstractEntity
 {
-    private $_tableName = 'disease';
-    private $_repositoryName = 'DiseaseRepository';
-    private $_fieldNames = ['Id','Userid','Diseaseid', 'Symptoms', 'Description', 'Victimcount','Locationid','Entryid'];
-    private $_columnNames = ['id','userid','diseaseid', 'symptoms', 'description', 'victimcount','locationid','entryid'];
+    private $_tableName = 'diseasedata';
+    private $_repositoryName = 'DiseaseDataRepository';
+    private $_fieldNames = ['Id','Userid','Diseasedataid', 'Symptoms', 'Description', 'Victimcount','Locationcode','Entryid'];
+    private $_columnNames = ['id','userid','diseasedataid', 'symptoms', 'description', 'victimcount','locationcode','entryid'];
 
     private $id;
     private $userid;
-    private $diseaseid;
+    private $diseasedataid;
     private $symptoms;
     private $description;
     private $victimcount;
-    private $locationid;
+    private $locationcode;
     private $entryid;
 
     /**
@@ -57,17 +57,17 @@ class Disease extends AbstractEntity
     /**
      * @return mixed
      */
-    public function getDiseaseid()
+    public function getDiseasedataid()
     {
-        return $this->diseaseid;
+        return $this->diseasedataid;
     }
 
     /**
-     * @param mixed $diseaseid
+     * @param mixed $diseasedataid
      */
-    public function setDiseaseid($diseaseid)
+    public function setDiseasedataid($diseasedataid)
     {
-        $this->diseaseid = $diseaseid;
+        $this->diseasedataid = $diseasedataid;
     }
 
     /**
@@ -121,17 +121,17 @@ class Disease extends AbstractEntity
     /**
      * @return mixed
      */
-    public function getLocationid()
+    public function getLocationcode()
     {
-        return $this->locationid;
+        return $this->locationcode;
     }
 
     /**
-     * @param mixed $locationid
+     * @param mixed $locationcode
      */
-    public function setLocationid($locationid)
+    public function setLocationcode($locationcode)
     {
-        $this->locationid = $locationid;
+        $this->locationcode = $locationcode;
     }
 
     /**

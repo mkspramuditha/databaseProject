@@ -2,13 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DiseaseData;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
+use AppBundle\Repository\DiseaseDataRepository;
 use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\VarDumper\Cloner\Data;
 
 class DefaultController extends Controller
@@ -26,21 +29,22 @@ class DefaultController extends Controller
 
         $user = $token->getUser();
 //============================================================================================
-//        $myUser = new Users();
-//        $myUser->setId(5);
-//        $myUser->setUsername('shan');
-//        $encoder = $this->container->get('security.password_encoder');
-//        $encoded = $encoder->encodePassword($myUser, 'pramuditha');
-//        $myUser->setPassword($encoded);
-//        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
-//        $this->db()->insert($myUser);
+//        $disease = new DiseaseData();
+//        $disease->setId(1);
+//        $disease->setUserid('shan');
+//        $disease->setDiseasedataid('d01');
+//        $disease->setSymptoms('puka ridenawa');
+//        $disease->setDescription('thiyanawa');
+//        $disease->setVictimcount(213);
+//        $disease->setLocationcode('81000');
+//        $disease->setEntryid('e01');
+//        $this->db()->update($disease);
 //
-//        $user = UsersRepository::getInstance()->findBy(array('username'),array('shan'));
+
+
 //
-//        $user = UsersRepository::getInstance()->findAll();
-//        var_dump($user[0]->getRoles());
+        $disease = DiseaseDataRepository::getInstance()->findOneBy(array('diseasedataid'),array('d01'));
 //
-//        var_dump($user->getUsername());
 
         //================================================================================================
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');

@@ -9,14 +9,14 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\Disease;
+use AppBundle\Entity\DiseaseData;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
 
-class DiseaseRepository extends AbstractRepository
+class DiseaseDataRepository extends AbstractRepository
 {
-    protected $_tableName = "disease";
-    protected $_entityName = "Disease";
+    protected $_tableName = "diseasedata";
+    protected $_entityName = "DiseaseData";
     public static $instance;
 
     public function setTableName($table)
@@ -40,7 +40,7 @@ class DiseaseRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON disease.locationid = location.locationid  JOIN diseaseentry ON disease.entryid= diseaseentry.entryid JOIN users ON disease.username = users.username WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,7 +53,7 @@ class DiseaseRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON disease.locationid = location.locationid  JOIN diseaseentry ON disease.entryid= diseaseentry.entryid JOIN users ON disease.username = users.username';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -72,7 +72,7 @@ class DiseaseRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON disease.locationid = location.locationid  JOIN diseaseentry ON disease.entryid= diseaseentry.entryid JOIN users ON disease.username = users.username WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
@@ -90,7 +90,7 @@ class DiseaseRepository extends AbstractRepository
     public static function getInstance()
     {
         if (self::$instance == null) {
-            self::$instance = new DiseaseRepository();
+            self::$instance = new DiseaseDataRepository();
         }
         return self::$instance;
     }
@@ -98,13 +98,13 @@ class DiseaseRepository extends AbstractRepository
     public function setObject($row)
     {
 
-        $disease = new Disease();
+        $disease = new DiseaseData();
         $disease->setUserid($row['userid']);
-        $disease->setDiseaseid($row['diseaseid']);
+        $disease->setDiseasedataid($row['diseasedataid']);
         $disease->setSymptoms($row['symptoms']);
         $disease->setDescription($row['description']);
         $disease->setVictimcount($row['victimcount']);
-        $disease->setLocationid($row['locationid']);
+        $disease->setLocationcode($row['locationcode']);
         $disease->setEntryid($row['entryid']);
 
         return $disease;

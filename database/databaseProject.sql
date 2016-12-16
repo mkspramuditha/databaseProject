@@ -33,7 +33,7 @@ CREATE TABLE `diseasedata` (
   `symptoms` varchar(1023) NOT NULL,
   `description` varchar(1023) NOT NULL,
   `victimcount` int(11) NOT NULL,
-  `locationid` varchar(255) NOT NULL,
+  `locationcode` varchar(255) NOT NULL,
   `entryid` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
