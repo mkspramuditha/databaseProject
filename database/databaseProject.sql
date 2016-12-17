@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2016 at 05:48 PM
+-- Generation Time: Dec 17, 2016 at 11:08 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -33,9 +33,16 @@ CREATE TABLE `diseasedata` (
   `symptoms` varchar(1023) NOT NULL,
   `description` varchar(1023) NOT NULL,
   `victimcount` int(11) NOT NULL,
-  `locationcode` varchar(255) NOT NULL,
+  `locationid` varchar(255) NOT NULL,
   `entryid` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `diseasedata`
+--
+
+INSERT INTO `diseasedata` (`id`, `userid`, `diseasedataid`, `symptoms`, `description`, `victimcount`, `locationid`, `entryid`) VALUES
+(1, 'shan', 'd01', 'puka ridenawa', 'thiyanawa', 213, '81000', 'e01');
 
 -- --------------------------------------------------------
 
@@ -49,6 +56,14 @@ CREATE TABLE `entrydetails` (
   `datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `entrydetails`
+--
+
+INSERT INTO `entrydetails` (`id`, `entryid`, `datetime`) VALUES
+(1, 'e01', '2016-12-20 00:00:00'),
+(6, 'entry02', '2016-11-11 12:24:18');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +75,34 @@ CREATE TABLE `location` (
   `locationcode` varchar(255) NOT NULL,
   `locationname` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`id`, `locationcode`, `locationname`) VALUES
+(1, '81000', 'Matara');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `roleId` varchar(255) NOT NULL,
+  `roleName` varchar(255) NOT NULL,
+  `adminLevel` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `roleId`, `roleName`, `adminLevel`) VALUES
+(7, 'ro1', 'Maha baba', '45'),
+(1, 'ROLE_ADMIN', 'Role Admin', '10');
 
 -- --------------------------------------------------------
 
@@ -87,15 +130,16 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `email` varchar(255) NOT NULL,
+  `roleid` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
-(1, 'shan', '$2a$12$E.cl1EtTNTfziopSTbRp2uH8qJYgEDi9OeGDLErJBIqUa6Y.oxive', 'mkspramuditha@gmail.com');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `roleid`) VALUES
+(1, 'shan', '$2a$12$E.cl1EtTNTfziopSTbRp2uH8qJYgEDi9OeGDLErJBIqUa6Y.oxive', 'mkspramuditha@gmail.com', 'ROLE_ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -123,6 +167,13 @@ ALTER TABLE `location`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`roleId`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
 -- Indexes for table `userdetails`
 --
 ALTER TABLE `userdetails`
@@ -144,17 +195,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `diseasedata`
 --
 ALTER TABLE `diseasedata`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `entrydetails`
 --
 ALTER TABLE `entrydetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `userdetails`
 --
