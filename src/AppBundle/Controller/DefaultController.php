@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\DiseaseData;
 use AppBundle\Entity\EntryDetails;
+use AppBundle\Entity\Roles;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
 use AppBundle\Repository\DiseaseDataRepository;
 use AppBundle\Repository\EntryDetailsRepository;
+use AppBundle\Repository\RolesRepository;
 use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,16 +33,18 @@ class DefaultController extends Controller
 
         $user = $token->getUser();
 //============================================================================================
-//        $entry = new EntryDetails();
-//        $entry->setId(6);
-//        $entry->setEntryid('entry02');
-//        $entry->setDatetime('2016-11-11 12:24:18');
-//        $this->db()->update($entry);
 
+//
+//        $roles = new Roles();
+//        $roles->setId(7);
+//        $roles->setRoleId('ro1');
+//        $roles->setRoleName('Maha baba');
+//        $roles->setAdminLevel(45);
+//        $this->db()->update($roles);
 
 
 //
-//        $disease = EntryDetailsRepository::getInstance()->findBy(array('entryid'),array('entry02'));
+//        $roles = RolesRepository::getInstance()->findBy(array('roleId'),array('ro1'));
 //
 
         //================================================================================================
