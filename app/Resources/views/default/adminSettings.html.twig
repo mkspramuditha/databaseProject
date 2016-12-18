@@ -1,0 +1,91 @@
+{% extends 'baseBackend.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+    <div class="page-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Overview</h1>
+            {#<p>Start a beautiful journey here</p>#}
+        </div>
+        <div>
+            <ul class="breadcrumb">
+                <li><i class="fa fa-home fa-lg"></i></li>
+                <li><a href="{{ url('adminDashboard') }}">Overview</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h3 class="card-title">Animated Checkbox and Radio Buttons</h3>
+                        <!--Radio Button Markup-->
+                        <div class="animated-radio-button">
+                            <label>
+                                <input type="radio"><span class="label-text">Radio Button</span>
+                            </label>
+                        </div>
+                        <!--Checkbox Markup-->
+                        <div class="animated-checkbox">
+                            <label>
+                                <input type="checkbox"><span class="label-text">Checkbox</span>
+                            </label>
+                        </div>
+                        <h4>Disabled state</h4>
+                        <div class="animated-radio-button">
+                            <label>
+                                <input type="radio" disabled=""><span class="label-text">Radio Button</span>
+                            </label>
+                        </div>
+                        <div class="animated-checkbox">
+                            <label>
+                                <input type="checkbox" disabled=""><span class="label-text">Checkbox</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h3 class="card-title">Animated Toggle Button</h3>
+                        <p> <b>Toggle Button</b></p>
+                        <div class="toggle">
+                            <label>
+                                <input type="checkbox"><span class="button-indecator"></span>
+                            </label>
+                        </div>
+                        <div class="toggle lg">
+                            <label>
+                                <input type="checkbox"><span class="button-indecator"></span>
+                            </label>
+                        </div>
+                        <p> <b>Fliping Toggle Button</b></p>
+                        <div class="toggle-flip">
+                            <label>
+                                <input type="checkbox"><span data-toggle-on="ON" data-toggle-off="OFF" class="flip-indecator"></span>
+                            </label>
+                        </div>
+                        <h4>Disabled state</h4>
+                        <div class="toggle">
+                            <label>
+                                <input type="checkbox" disabled=""><span class="button-indecator"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-flip">
+                            <label>
+                                <input type="checkbox" disabled=""><span data-toggle-on="ON" data-toggle-off="OFF" class="flip-indecator"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
