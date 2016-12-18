@@ -107,6 +107,7 @@ class UsersRepository extends AbstractRepository
         $user->setEmail($row['email']);
         $user->setRoles(array($row['roleId']));
         $user->setStatus($row['statusId']);
+        $user->setToken($row['token']);
 
         return $user;
     }

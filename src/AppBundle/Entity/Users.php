@@ -10,8 +10,8 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
 {
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
-    private $_fieldNames = ['Id','Username','Password','Email','Roles','Status'];
-    private $_columnNames = ['id','username','password','email','roleId','statusId'];
+    private $_fieldNames = ['Id','Username','Password','Email','Roles','Status','Token'];
+    private $_columnNames = ['id','username','password','email','roleId','statusId','token'];
 
     private $id;
     private $username;
@@ -19,6 +19,8 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
     private $email;
     private $roles;
     private $status;
+    private $token;
+
 
 
     public function __construct()
@@ -27,6 +29,21 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
         $this->setRepositoryName($this->_repositoryName);
         $this->setFieldNames($this->_fieldNames);
 
+    }
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
     }
 
     /**

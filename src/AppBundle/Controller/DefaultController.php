@@ -43,15 +43,16 @@ class DefaultController extends Controller
 //============================================================================================
 
 
-        $user = new Users();
-        $user->setId(4321);
-        $user->setUsername('nipunasudha');
-        $user->setPassword('324fsd43');
-        $user->setEmail('nipuna.sudha@gmail.com');
-        $user->setRoles('ROLE_ADMIN');
-        $user->setStatus('K');
-
-        $this->db()->update($user);
+//        $user = new Users();
+//        $user->setId(4321);
+//        $user->setUsername('nipunasudha');
+//        $user->setPassword('324fsd43');
+//        $user->setEmail('nipuna.sudha@gmail.com');
+//        $user->setRoles('ROLE_ADMIN');
+//        $user->setStatus('K');
+//        $user->setToken('3244ij4h23ji4h24gh23u4ghu');
+//
+//        $this->db()->update($user);
 
 
 

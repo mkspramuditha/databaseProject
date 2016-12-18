@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2016 at 09:44 AM
+-- Generation Time: Dec 18, 2016 at 10:06 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -122,7 +122,9 @@ CREATE TABLE `status` (
 --
 
 INSERT INTO `status` (`id`, `statusId`, `statusName`) VALUES
-(8, 'K', 'Karma');
+(2, 'STATUS_ACTIVE', 'Active'),
+(3, 'STATUS_INACTIVE', 'Inactive'),
+(1, 'STATUS_PENDING', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -159,16 +161,17 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `roleid` varchar(255) DEFAULT NULL,
-  `statusId` varchar(255) NOT NULL
+  `statusId` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `roleid`, `statusId`) VALUES
-(4321, 'nipunasudha', '324fsd43', 'nipuna.sudha@gmail.com', 'ROLE_ADMIN', 'K'),
-(1, 'shan', '$2a$12$E.cl1EtTNTfziopSTbRp2uH8qJYgEDi9OeGDLErJBIqUa6Y.oxive', 'mkspramuditha@gmail.com', 'ROLE_ADMIN', 'K');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `roleid`, `statusId`, `token`) VALUES
+(4321, 'nipunasudha', '324fsd43', 'nipuna.sudha@gmail.com', 'ROLE_ADMIN', 'K', '3244ij4h23ji4h24gh23u4ghu'),
+(1, 'shan', '$2a$12$E.cl1EtTNTfziopSTbRp2uH8qJYgEDi9OeGDLErJBIqUa6Y.oxive', 'mkspramuditha@gmail.com', 'ROLE_ADMIN', 'K', '');
 
 --
 -- Indexes for dumped tables
@@ -251,7 +254,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `userdetails`
 --
