@@ -51,6 +51,17 @@ class ApiController extends DefaultController
      */
     public function apiRegisterAction(Request $request)
     {
+//        $test = new \stdClass();
+//        $test->username = "shan";
+//        $test->password = "shan";
+//        $test->email = "shan";
+//        $test->firstName = "shan";
+//        $test->middleName = "shan";
+//        $test->lastName = "shan";
+//        $test->role = "ROLE_ADMIN";
+//
+//        var_dump($this->objectSerialize($test));
+
         $requestObject = $request->get('data');
         $register   = $this->objectDeserialize($requestObject);
         $username   = $register->username;
