@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Users;
+use AppBundle\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,8 +36,12 @@ class ApiController extends DefaultController
         return json_decode($text);
     }
 
-    protected function isAPIAuthenticated($user){
-
+    protected function isAPIAuthenticated($username , $token){
+        $user = UsersRepository::getInstance()->findOneBy(array('username','token'),array($username,$token));
+        if($user == null){
+            return false;
+        }
+        return true;
     }
 
 
@@ -44,8 +50,20 @@ class ApiController extends DefaultController
      */
     public function apiRegisterAction(Request $request)
     {
-        $requestObject = $request->get('obj');
-        $register = $this->objectDeserialize($requestObject);
+        $requestObject = $request->get('data');
+        $register   = $this->objectDeserialize($requestObject);
+        $username   = $register->username;
+        $password   = $register->password;
+        $email      = $register->email;
+        $firstName  = $register->firstName;
+        $middleName = $register->middleName;
+        $lastName   = $register->lastName;
+        $phone      = $register->lastName;
+        $role       = $register->role;
+
+        $user = new Users();
+        $user->setUsername($username);
+
         return new Response($register->id);
     }
 
