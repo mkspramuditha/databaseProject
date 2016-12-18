@@ -9,14 +9,15 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\Users;
+
+use AppBundle\Entity\UserDetails;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
 
-class UsersRepository extends AbstractRepository
+class UserDetailsRepository extends AbstractRepository
 {
-    protected $_tableName = "users";
-    protected $_entityName = "Users";
+    protected $_tableName = "userdetails";
+    protected $_entityName = "UserDetails";
     public static $instance;
 
     public function setTableName($table)
@@ -40,7 +41,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,7 +54,7 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid';
+        $query = 'SELECT * FROM ' . $table;
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -72,7 +73,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT * FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
@@ -90,19 +91,25 @@ class UsersRepository extends AbstractRepository
     public static function getInstance()
     {
         if (self::$instance == null) {
-            self::$instance = new UsersRepository();
+            self::$instance = new UserDetailsRepository();
         }
         return self::$instance;
     }
 
     public function setObject($row)
     {
-        $user = new Users();
-        $user->setId($row['id']);
-        $user->setUsername($row['username']);
-        $user->setPassword($row['password']);
-        $user->setEmail($row['email']);
-        $user->setRoles(array($row['roleId']));
-        return $user;
+
+
+        $userdetails = new UserDetails();
+        $userdetails->setId($row['id']);
+        $userdetails->setUserid($row['userid']);
+        $userdetails->setFirstname($row['firstname']);
+        $userdetails->setMiddlename($row['middlename']);
+        $userdetails->setLastname($row['lastname']);
+        $userdetails->setPhone($row['phone']);
+        $userdetails->setEmail($row['email']);
+
+
+        return $userdetails;
     }
 }

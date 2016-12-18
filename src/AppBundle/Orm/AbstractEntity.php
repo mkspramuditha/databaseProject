@@ -24,11 +24,27 @@ Abstract class AbstractEntity implements EntityInterface
     }
 
     /**
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->_tableName;
+    }
+
+    /**
      * @param mixed $repositoryName
      */
     public function setRepositoryName($repositoryName)
     {
         $this->_repositoryName = $repositoryName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepositoryName()
+    {
+        return $this->_repositoryName;
     }
 
     /**

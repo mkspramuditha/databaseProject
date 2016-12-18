@@ -9,14 +9,14 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\Users;
+use AppBundle\Entity\DiseaseData;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
 
-class UsersRepository extends AbstractRepository
+class DiseaseDataRepository extends AbstractRepository
 {
-    protected $_tableName = "users";
-    protected $_entityName = "Users";
+    protected $_tableName = "diseasedata";
+    protected $_entityName = "DiseaseData";
     public static $instance;
 
     public function setTableName($table)
@@ -40,7 +40,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,7 +53,7 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -72,7 +72,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
@@ -90,19 +90,23 @@ class UsersRepository extends AbstractRepository
     public static function getInstance()
     {
         if (self::$instance == null) {
-            self::$instance = new UsersRepository();
+            self::$instance = new DiseaseDataRepository();
         }
         return self::$instance;
     }
 
     public function setObject($row)
     {
-        $user = new Users();
-        $user->setId($row['id']);
-        $user->setUsername($row['username']);
-        $user->setPassword($row['password']);
-        $user->setEmail($row['email']);
-        $user->setRoles(array($row['roleId']));
-        return $user;
+
+        $disease = new DiseaseData();
+        $disease->setUserid($row['userid']);
+        $disease->setDiseasedataid($row['diseasedataid']);
+        $disease->setSymptoms($row['symptoms']);
+        $disease->setDescription($row['description']);
+        $disease->setVictimcount($row['victimcount']);
+        $disease->setLocationcode($row['locationcode']);
+        $disease->setEntryid($row['entryid']);
+
+        return $disease;
     }
 }

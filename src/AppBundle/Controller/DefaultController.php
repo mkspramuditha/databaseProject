@@ -2,15 +2,26 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DiseaseData;
+use AppBundle\Entity\EntryDetails;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Roles;
+
+use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
+use AppBundle\Repository\DiseaseDataRepository;
+use AppBundle\Repository\EntryDetailsRepository;
+use AppBundle\Repository\LocationRepository;
+use AppBundle\Repository\RolesRepository;
+use AppBundle\Repository\UserDetailsRepository;
 use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\VarDumper\Cloner\Data;
-
 class DefaultController extends Controller
 {
     /**
@@ -26,24 +37,30 @@ class DefaultController extends Controller
 
         $user = $token->getUser();
 
-//        $myUser = new Users();
-//        $myUser->setId(1);
-//        $myUser->setUsername('shan');
-//        $encoder = $this->container->get('security.password_encoder');
-//        $encoded = $encoder->encodePassword($myUser,'pramuditha');
-//        $myUser->setPassword($encoded);
-//        $myUser->setEmail('mkspramuditha@gmail.comsdsdsd');
-//        $this->db()->update($myUser);
+//============================================================================================
 
-//        $user = UsersRepository::getInstance()->findBy(array('username'),array('shan'));
+//
+//        $userdetails = new UserDetails();
+//        $userdetails->setId(5);
+//        $userdetails->setUserid('shan');
+//        $userdetails->setFirstname('shan');
+//        $userdetails->setMiddlename('pramuditha');
+//        $userdetails->setLastname('pathirana');
+//        $userdetails->setPhone('4238947238');
+//        $userdetails->setEmail('shan@shan');
+//
+//
+//        $this->db()->update($userdetails);
+//
+//
+//
+//        $userdetails = UserDetailsRepository::getInstance()->findBy(array('firstname'),array('nananaa'));
 
-//        $user = UsersRepository::getInstance()->findAll();
-//        var_dump($user[0]->getRoles());
 
-//        var_dump($user->getUsername());
+        //================================================================================================
+
         $isRoleAdmin = $auth_checker->isGranted('ROLE_ADMIN');
-        if($isRoleAdmin)
-        {
+        if ($isRoleAdmin) {
             return $this->redirect(
                 $this->generateUrl("adminDashboard")
             );
@@ -51,11 +68,11 @@ class DefaultController extends Controller
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        $error =$authenticationUtils->getLastAuthenticationError();
+        $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUserName();
-        return $this->render('default/adminLogin.html.twig',array(
-            'last_username' =>$lastUsername,
-            'error'=>$error
+        return $this->render('default/adminLogin.html.twig', array(
+            'last_username' => $lastUsername,
+            'error' => $error
         ));
 
     }
@@ -69,7 +86,8 @@ class DefaultController extends Controller
         exit;
     }
 
-    public function db(){
+    public function db()
+    {
         return DatabaseHandler::getInstance();
     }
 
