@@ -99,6 +99,7 @@ class LocationRepository extends AbstractRepository
     {
 
         $location = new Location();
+        $location->setId($row['id']);
         $location->setLocationcode($row['locationcode']);
         $location->setLocationname($row['locationname']);
 

@@ -38,9 +38,9 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $tableField = implode(',',$field);
+        $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE ('. $tableField .') = ('. $values .') LIMIT 1';
+        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,12 +53,12 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM '.$table.' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid';
+        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
-        $resultArray= [];
-        foreach ($row as $item){
+        $resultArray = [];
+        foreach ($row as $item) {
             $resultArray[] = $this->setObject($item);
         }
 
@@ -70,16 +70,16 @@ class UsersRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $tableField = implode(',',$field);
+        $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE ('. $tableField .') = ('. $values .') ';
+        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
         $row = $DBInstance->fetchArray();
 //        var_dump($row);
-        $resultArray= [];
-        foreach ($row as $item){
+        $resultArray = [];
+        foreach ($row as $item) {
             $resultArray[] = $this->setObject($item);
         }
 
@@ -87,20 +87,22 @@ class UsersRepository extends AbstractRepository
 
     }
 
-    public static function getInstance(){
-        if(self::$instance == null){
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
             self::$instance = new UsersRepository();
         }
         return self::$instance;
     }
 
-    public function setObject($row){
+    public function setObject($row)
+    {
         $user = new Users();
         $user->setId($row['id']);
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRoles(array($row['roleId']));
-         return $user;
+        return $user;
     }
 }

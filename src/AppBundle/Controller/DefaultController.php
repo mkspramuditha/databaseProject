@@ -4,11 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\DiseaseData;
 use AppBundle\Entity\EntryDetails;
+use AppBundle\Entity\Location;
 use AppBundle\Entity\Roles;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
 use AppBundle\Repository\DiseaseDataRepository;
 use AppBundle\Repository\EntryDetailsRepository;
+use AppBundle\Repository\LocationRepository;
 use AppBundle\Repository\RolesRepository;
 use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,16 +37,17 @@ class DefaultController extends Controller
 //============================================================================================
 
 //
-//        $roles = new Roles();
-//        $roles->setId(7);
-//        $roles->setRoleId('ro1');
-//        $roles->setRoleName('Maha baba');
-//        $roles->setAdminLevel(45);
-//        $this->db()->update($roles);
+//
+//        $location = new Location();
+//        $location->setId(7);
+//        $location->setLocationcode(89000);
+//        $location->setLocationname('Kurunagala');
+//
+//        $this->db()->update($location);
 
 
 //
-//        $roles = RolesRepository::getInstance()->findBy(array('roleId'),array('ro1'));
+//        $location = LocationRepository::getInstance()->findBy(array('locationcode'),array('543'));
 //
 
         //================================================================================================
