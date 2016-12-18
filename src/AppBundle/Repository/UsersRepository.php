@@ -73,7 +73,27 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.role = roles.id JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.id JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
+        $results = $DBInstance->query($query);
+        $DBInstance->setResult($results);
+//        var_dump($DBInstance->getResult());
+        $row = $DBInstance->fetchArray();
+//        var_dump($row);
+        $resultArray = [];
+        foreach ($row as $item) {
+            $resultArray[] = $this->setObject($item);
+        }
+
+        return $resultArray;
+
+    }
+ public function findLike()
+    {
+        $table = $this->_tableName;
+        $DBInstance = DatabaseHandler::getInstance();
+        $tableField = implode(',', $field);
+        $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
+        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.id JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
@@ -105,7 +125,7 @@ class UsersRepository extends AbstractRepository
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
-        $user->setRoles(array($row['roleId']));
+        $user->setRoles(array($row['roleid']));
         $user->setStatus($row['statusId']);
         $user->setToken($row['token']);
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\DiseaseDataRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,9 +18,12 @@ class AdminController extends DefaultController
     public function adminDashboardAction(Request $request)
     {
         $user = $this->getUser();
-
+        $recentData = DiseaseDataRepository::getInstance()->findAll();
+//        print_r($recentData);
         return $this->render('default/adminDashboard.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'recentData'=>$recentData
+
         ));
 
     }
