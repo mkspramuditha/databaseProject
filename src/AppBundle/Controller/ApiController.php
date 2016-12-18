@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\DiseaseData;
 use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
@@ -73,7 +74,7 @@ class ApiController extends DefaultController
         $firstName  = $register->firstName;
         $middleName = $register->middleName;
         $lastName   = $register->lastName;
-        $phone      = $register->lastName;
+        $phone      = $register->phone;
         $role       = $register->role;
 //        $token      = md5($username+rand(0,1000));
         $message    ="";
@@ -94,6 +95,7 @@ class ApiController extends DefaultController
         $user->setPassword($encoded);
         $user->setEmail($email);
         $user->setRoles($role);
+        $user->setToken("");
 //        $user->setToken($token);
         if($role == "ROLE_DOCTOR" or $role == "ROLE_HEALTH_OFFICER"){
             $user->setStatus("STATUS_PENDING");
@@ -223,13 +225,41 @@ class ApiController extends DefaultController
      */
     public function apiSyncDownAction(Request $request)
     {
-        $requestObject = $request->get('obj');
-        $register = $this->objectDeserialize($requestObject);
-        return new Response($register->id);
+        $requestObject = $request->get('data');
+        $syncUp = $this->objectDeserialize($requestObject);
+        $username = $syncUp->username;
+        $token = $syncUp->token;
+        $data = $syncUp->data;
+
+        $user = UsersRepository::getInstance()->findOneBy(array('username','token'),array($username,$token));
+
+        $obj = new \stdClass();
+
+        if($user!= null){
+            foreach ($data as $row){
+
+                $diseaseData = new DiseaseData();
+
+                $diseaseData->setEntryid($row->entryId);
+                $diseaseData->setUserid($username);
+                $diseaseData->setSymptoms($row->symptoms);
+                $diseaseData->setDescription($row->description);
+                $diseaseData->setVictimcount($row->victimCount);
+                $diseaseData->setLocationcode($row->locationCode);
+                $this->db()->insert($diseaseData);
+
+            }
+            return new Response("hi");
+
+        }
+
+
+
+//        return new Response($register->id);
     }
 
     public function isUserExists($username, $email=""){
-        $query = "SELECT FROM users WHERE username = ". $username . " OR email = " .$email. " ";
+        $query = "SELECT * FROM users WHERE username = '". $username . "' OR email = '" .$email. "' ";
         $instance = DatabaseHandler::getInstance();
         $results = $instance->query($query);
         $instance->setResult($results);
