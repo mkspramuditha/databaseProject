@@ -6,10 +6,10 @@ use AppBundle\Orm\AbstractEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserDetials extends AbstractEntity
+class UserDetails extends AbstractEntity
 {
-    private $_tableName = 'userdetials';
-    private $_repositoryName = 'UserDetialsRepository';
+    private $_tableName = 'userdetails';
+    private $_repositoryName = 'UserDetailsRepository';
     private $_fieldNames = ['Id', 'Userid', 'FirstName', 'MiddleName', 'LastName', 'Phone', 'Email'];
     private $_columnNames = ['id', 'userid', 'firstname', 'middlename', 'lastname', 'phone', 'email'];
 

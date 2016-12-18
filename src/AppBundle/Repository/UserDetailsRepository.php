@@ -10,14 +10,14 @@ namespace AppBundle\Repository;
 
 
 
-use AppBundle\Entity\UserDetials;
+use AppBundle\Entity\UserDetails;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
 
-class UserDetialsRepository extends AbstractRepository
+class UserDetailsRepository extends AbstractRepository
 {
-    protected $_tableName = "userdetials";
-    protected $_entityName = "UserDetials";
+    protected $_tableName = "userdetails";
+    protected $_entityName = "UserDetails";
     public static $instance;
 
     public function setTableName($table)
@@ -91,7 +91,7 @@ class UserDetialsRepository extends AbstractRepository
     public static function getInstance()
     {
         if (self::$instance == null) {
-            self::$instance = new UserDetialsRepository();
+            self::$instance = new UserDetailsRepository();
         }
         return self::$instance;
     }
@@ -100,16 +100,16 @@ class UserDetialsRepository extends AbstractRepository
     {
 
 
-        $userdetials = new UserDetials();
-        $userdetials->setId($row['id']);
-        $userdetials->setUserid($row['userid']);
-        $userdetials->setFirstname($row['firstname']);
-        $userdetials->setMiddlename($row['middlename']);
-        $userdetials->setLastname($row['lastname']);
-        $userdetials->setPhone($row['phone']);
-        $userdetials->setEmail($row['email']);
+        $userdetails = new UserDetails();
+        $userdetails->setId($row['id']);
+        $userdetails->setUserid($row['userid']);
+        $userdetails->setFirstname($row['firstname']);
+        $userdetails->setMiddlename($row['middlename']);
+        $userdetails->setLastname($row['lastname']);
+        $userdetails->setPhone($row['phone']);
+        $userdetails->setEmail($row['email']);
 
 
-        return $userdetials;
+        return $userdetails;
     }
 }
