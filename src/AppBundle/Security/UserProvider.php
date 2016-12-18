@@ -15,13 +15,15 @@ class UserProvider implements UserProviderInterface
     {
         $connection = DatabaseHandler::getInstance()->connect();
 //        $query = "SELECT * FROM `users` WHERE `username` = '$username'";
-        $query = "SELECT * FROM `users` JOIN roles ON users.role = roles.id WHERE `username` = '$username' ";
+        $query = "SELECT * FROM `users` JOIN roles ON users.roleId = roles.roleId WHERE `username` = '$username' ";
 //        var_dump($query);
-
+//        exit;
         $result  = mysqli_query($connection, $query);
 //        var_dump($connection->error);
 //        exit;
         $row = mysqli_fetch_array($result);
+//        var_dump($row);
+//        exit;
         if($row !=null){
             $user = new Users();
             $user->setId($row['id']);
@@ -29,9 +31,13 @@ class UserProvider implements UserProviderInterface
             $user->setPassword($row['password']);
             $user->setEmail($row['email']);
             $user->setRoles(array($row['roleId']));
+//            var_dump("shan");
+//            exit;
             return $user;
         }
         else{
+//            var_dump("error");
+//            exit;
             return new UsernameNotFoundException("Username not found :". $username);
         }
 

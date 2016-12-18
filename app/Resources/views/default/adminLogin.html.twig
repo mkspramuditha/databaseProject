@@ -19,7 +19,7 @@
     <div class="login-box">
 
         {% if error %}
-            {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             <div style="color: red; font-weight: bold">Invalid Username or Password</div>
         {% endif %}
         <form action="{{ url('adminLogin') }}" class="login-form" method="post">
