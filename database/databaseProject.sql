@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2016 at 11:08 AM
+-- Generation Time: Dec 18, 2016 at 09:44 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -81,7 +81,8 @@ CREATE TABLE `location` (
 --
 
 INSERT INTO `location` (`id`, `locationcode`, `locationname`) VALUES
-(1, '81000', 'Matara');
+(1, '81000', 'Matara'),
+(7, '89000', 'Kurunagala');
 
 -- --------------------------------------------------------
 
@@ -107,6 +108,25 @@ INSERT INTO `roles` (`id`, `roleId`, `roleName`, `adminLevel`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `status`
+--
+
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL,
+  `statusId` varchar(255) NOT NULL,
+  `statusName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status`
+--
+
+INSERT INTO `status` (`id`, `statusId`, `statusName`) VALUES
+(8, 'K', 'Karma');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `userdetails`
 --
 
@@ -114,11 +134,18 @@ CREATE TABLE `userdetails` (
   `id` int(11) NOT NULL,
   `userid` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
-  `secondname` varchar(255) NOT NULL,
+  `middlename` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userdetails`
+--
+
+INSERT INTO `userdetails` (`id`, `userid`, `firstname`, `middlename`, `lastname`, `phone`, `email`) VALUES
+(5, 'shan', 'shan', 'pramuditha', 'pathirana', '4238947238', 'shan@shan');
 
 -- --------------------------------------------------------
 
@@ -131,15 +158,17 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `roleid` varchar(255) DEFAULT NULL
+  `roleid` varchar(255) DEFAULT NULL,
+  `statusId` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `roleid`) VALUES
-(1, 'shan', '$2a$12$E.cl1EtTNTfziopSTbRp2uH8qJYgEDi9OeGDLErJBIqUa6Y.oxive', 'mkspramuditha@gmail.com', 'ROLE_ADMIN');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `roleid`, `statusId`) VALUES
+(4321, 'nipunasudha', '324fsd43', 'nipuna.sudha@gmail.com', 'ROLE_ADMIN', 'K'),
+(1, 'shan', '$2a$12$E.cl1EtTNTfziopSTbRp2uH8qJYgEDi9OeGDLErJBIqUa6Y.oxive', 'mkspramuditha@gmail.com', 'ROLE_ADMIN', 'K');
 
 --
 -- Indexes for dumped tables
@@ -174,6 +203,13 @@ ALTER TABLE `roles`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`statusId`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
 -- Indexes for table `userdetails`
 --
 ALTER TABLE `userdetails`
@@ -195,7 +231,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `diseasedata`
 --
 ALTER TABLE `diseasedata`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `entrydetails`
 --
@@ -205,22 +241,27 @@ ALTER TABLE `entrydetails`
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT for table `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
 -- AUTO_INCREMENT for table `userdetails`
 --
 ALTER TABLE `userdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4322;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
