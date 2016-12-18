@@ -1,0 +1,69 @@
+{% extends 'baseBackend.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+        <div class="page-title">
+            <div>
+                <h1><i class="fa fa-dashboard"></i> Admin Dashboad</h1>
+                {#<p>Start a beautiful journey here</p>#}
+            </div>
+            <div>
+                <ul class="breadcrumb">
+                    <li><i class="fa fa-home fa-lg"></i></li>
+                    <li><a href="{{ url('adminDashboard') }}">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row mt-20">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <h3 class="card-title">Vector Map</h3>
+                            <div class="card-body">
+                                <div id="demo-map" style="height: 400px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="widget-small primary"><i class="icon fa fa-users fa-3x"></i>
+                            <div class="info">
+                                <h4>Users</h4>
+                                <p> <b>20</b></p>
+                            </div>
+                        </div>
+                        <div class="widget-small info"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+                            <div class="info">
+                                <h4>Likes</h4>
+                                <p> <b>20</b></p>
+                            </div>
+                        </div>
+                        <div class="widget-small danger"><i class="icon fa fa-comments-o fa-3x"></i>
+                            <div class="info">
+                                <h4>Comments</h4>
+                                <p> <b>200</b></p>
+                            </div>
+                        </div>
+                        <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+                            <div class="info">
+                                <h4>Uploades</h4>
+                                <p> <b>20</b></p>
+                            </div>
+                        </div>
+                        <div class="widget-small primary coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+                            <div class="info">
+                                <h4>Stars</h4>
+                                <p> <b>20</b></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -24,7 +24,7 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login
-                default_target_path: /dashboard
+                default_target_path: /admin/dashboard
             logout:
                 path: /logout
                 target : /login
@@ -32,5 +32,5 @@ security:
 
     access_control:
         # require ROLE_ADMIN for /admin*
-      - { path: ^/dashboard, roles: ROLE_ADMIN }
+      - { path: ^/admin, roles: ROLE_ADMIN }
 
