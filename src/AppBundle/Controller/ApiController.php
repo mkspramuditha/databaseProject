@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
+use AppBundle\Orm\DatabaseHandler;
 use AppBundle\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -121,7 +122,8 @@ class ApiController extends DefaultController
      */
     public function apiLoginAction(Request $request)
     {
-        $requestObject = $request->get('obj');
+        $requestObject = $request->get('data');
+
         $register = $this->objectDeserialize($requestObject);
         return new Response($register->id);
     }
@@ -146,4 +148,16 @@ class ApiController extends DefaultController
         return new Response($register->id);
     }
 
+    public function isUserExists($username, $email){
+        $query = "SELECT FROM users WHERE username = ". $username . " OR email = " .$email. " ";
+        $instance = DatabaseHandler::getInstance();
+        $results = $instance->query($query);
+        $instance->setResult($results);
+        if(!$instance->fetch()){
+            return true;
+        }
+        return true;
+
+
+    }
 }
