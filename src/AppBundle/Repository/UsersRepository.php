@@ -106,7 +106,7 @@ class UsersRepository extends AbstractRepository
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRoles(array($row['roleId']));
-        $user->setStatus($row['status']);
+        $user->setStatus($row['statusId']);
 
         return $user;
     }

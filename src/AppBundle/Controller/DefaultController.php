@@ -42,18 +42,19 @@ class DefaultController extends Controller
 
 //============================================================================================
 
-//
-//        $status = new Status();
-//        $status->setId(8);
-//        $status->setStatusId('K');
-//        $status->setStatusName('Karma');
-//
-//
-//
-//        $this->db()->update($status);
-//
-//
-//
+
+        $user = new Users();
+        $user->setId(4321);
+        $user->setUsername('nipunasudha');
+        $user->setPassword('324fsd43');
+        $user->setEmail('nipuna.sudha@gmail.com');
+        $user->setRoles('ROLE_ADMIN');
+        $user->setStatus('K');
+
+        $this->db()->update($user);
+
+
+
 //        $status = StatusRepository::getInstance()->findBy(array('id'),array(8));
 
 
