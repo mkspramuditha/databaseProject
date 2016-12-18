@@ -9,6 +9,7 @@
 namespace AppBundle\Repository;
 
 
+use AppBundle\Entity\Roles;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
@@ -97,12 +98,16 @@ class UsersRepository extends AbstractRepository
 
     public function setObject($row)
     {
+
+
         $user = new Users();
         $user->setId($row['id']);
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRoles(array($row['roleId']));
+        $user->setStatus($row['status']);
+
         return $user;
     }
 }

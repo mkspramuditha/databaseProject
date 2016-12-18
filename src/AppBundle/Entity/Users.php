@@ -10,14 +10,15 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
 {
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
-    private $_fieldNames = ['Id','Username','Password','Email'];
-    private $_columnNames = ['id','username','password','email'];
+    private $_fieldNames = ['Id','Username','Password','Email','Roles','Status'];
+    private $_columnNames = ['id','username','password','email','roles','status'];
 
     private $id;
     private $username;
     private $password;
     private $email;
     private $roles;
+    private $status;
 
 
     public function __construct()
@@ -26,6 +27,22 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
         $this->setRepositoryName($this->_repositoryName);
         $this->setFieldNames($this->_fieldNames);
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function callGetMethod($name)
