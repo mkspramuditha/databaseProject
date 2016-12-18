@@ -7,6 +7,7 @@ use AppBundle\Entity\EntryDetails;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Roles;
 
+use AppBundle\Entity\Status;
 use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
@@ -14,6 +15,7 @@ use AppBundle\Repository\DiseaseDataRepository;
 use AppBundle\Repository\EntryDetailsRepository;
 use AppBundle\Repository\LocationRepository;
 use AppBundle\Repository\RolesRepository;
+use AppBundle\Repository\StatusRepository;
 use AppBundle\Repository\UserDetailsRepository;
 use AppBundle\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\VarDumper\Cloner\Data;
+
 class DefaultController extends Controller
 {
     /**
@@ -39,22 +42,21 @@ class DefaultController extends Controller
 
 //============================================================================================
 
+
+//        $user = new Users();
+//        $user->setId(4321);
+//        $user->setUsername('nipunasudha');
+//        $user->setPassword('324fsd43');
+//        $user->setEmail('nipuna.sudha@gmail.com');
+//        $user->setRoles('ROLE_ADMIN');
+//        $user->setStatus('K');
+//        $user->setToken('3244ij4h23ji4h24gh23u4ghu');
 //
-//        $userdetails = new UserDetails();
-//        $userdetails->setId(5);
-//        $userdetails->setUserid('shan');
-//        $userdetails->setFirstname('shan');
-//        $userdetails->setMiddlename('pramuditha');
-//        $userdetails->setLastname('pathirana');
-//        $userdetails->setPhone('4238947238');
-//        $userdetails->setEmail('shan@shan');
-//
-//
-//        $this->db()->update($userdetails);
-//
-//
-//
-//        $userdetails = UserDetailsRepository::getInstance()->findBy(array('firstname'),array('nananaa'));
+//        $this->db()->update($user);
+
+
+
+//        $status = StatusRepository::getInstance()->findBy(array('id'),array(8));
 
 
         //================================================================================================
