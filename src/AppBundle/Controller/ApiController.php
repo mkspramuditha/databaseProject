@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
 use AppBundle\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,11 +61,46 @@ class ApiController extends DefaultController
         $lastName   = $register->lastName;
         $phone      = $register->lastName;
         $role       = $register->role;
-
+        $token      = md5($username+rand(0,1000));
+        $message    ="";
         $user = new Users();
         $user->setUsername($username);
 
-        return new Response($register->id);
+        $encoder = $this->container->get('security.password_encoder');
+        $encoded = $encoder->encodePassword($user, $password);
+        $user->setPassword($encoded);
+        $user->setEmail($email);
+        $user->setRoles($role);
+        $user->setToken($token);
+        if($role == "ROLE_DOCTOR" or $role == "ROLE_HEALTH_OFFICER"){
+            $user->setStatus("STATUS_PENDING");
+            $message = "Pending for admin approval";
+
+        }
+        else{
+            $user->setStatus("STATUS_ACTIVE");
+            $message = "Registration Successful";
+        }
+
+
+
+        $this->db()->insert($user);
+
+        $userDetails = new UserDetails();
+        $userDetails->setUserid($username);
+        $userDetails->setFirstname($firstName);
+        $userDetails->setMiddlename($middleName);
+        $userDetails->setLastname($lastName);
+        $userDetails->setPhone($phone);
+
+        $this->db()->insert($userDetails);
+
+        $obj = new \stdClass();
+        $obj->status = "success";
+        $obj->token = $token;
+        $obj->message = $message;
+
+        $this->apiSendResponse($obj);
     }
 
 
