@@ -103,15 +103,16 @@ class ApiController extends DefaultController
         $userDetails->setMiddlename($middleName);
         $userDetails->setLastname($lastName);
         $userDetails->setPhone($phone);
+        $userDetails->setEmail($email);
 
         $this->db()->insert($userDetails);
 
         $obj = new \stdClass();
-        $obj->status = "success";
+        $obj->status = true;
         $obj->token = $token;
         $obj->message = $message;
 
-        $this->apiSendResponse($obj);
+        return $this->apiSendResponse($obj);
     }
 
 
