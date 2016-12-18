@@ -3,8 +3,12 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\DiseaseData;
 use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
+use AppBundle\Orm\DatabaseHandler;
+use AppBundle\Repository\DiseaseDataRepository;
+use AppBundle\Repository\UserDetailsRepository;
 use AppBundle\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,10 +74,19 @@ class ApiController extends DefaultController
         $firstName  = $register->firstName;
         $middleName = $register->middleName;
         $lastName   = $register->lastName;
-        $phone      = $register->lastName;
+        $phone      = $register->phone;
         $role       = $register->role;
-        $token      = md5($username+rand(0,1000));
+//        $token      = md5($username+rand(0,1000));
         $message    ="";
+
+        if($this->isUserExists($username,$email)){
+            $obj = new \stdClass();
+            $obj->status = false;
+//            $obj->token = $token;
+            $obj->message = "Username or email exists";
+
+            return $this->apiSendResponse($obj);
+        }
         $user = new Users();
         $user->setUsername($username);
 
@@ -82,7 +95,8 @@ class ApiController extends DefaultController
         $user->setPassword($encoded);
         $user->setEmail($email);
         $user->setRoles($role);
-        $user->setToken($token);
+        $user->setToken("");
+//        $user->setToken($token);
         if($role == "ROLE_DOCTOR" or $role == "ROLE_HEALTH_OFFICER"){
             $user->setStatus("STATUS_PENDING");
             $message = "Pending for admin approval";
@@ -109,7 +123,7 @@ class ApiController extends DefaultController
 
         $obj = new \stdClass();
         $obj->status = true;
-        $obj->token = $token;
+//        $obj->token = $token;
         $obj->message = $message;
 
         return $this->apiSendResponse($obj);
@@ -121,9 +135,79 @@ class ApiController extends DefaultController
      */
     public function apiLoginAction(Request $request)
     {
-        $requestObject = $request->get('obj');
-        $register = $this->objectDeserialize($requestObject);
-        return new Response($register->id);
+        $requestObject = $request->get('data');
+
+        $login = $this->objectDeserialize($requestObject);
+
+        $username = $login->username;
+        $password = $login->password;
+
+        $obj = new \stdClass();
+
+        if(!$this->isUserExists($username)){
+            $obj->error = true;
+            $obj->errorMsg = "User does not exists";
+            $obj->token = null;
+            $obj->user = null;
+            $obj->data = null;
+
+            return $this->apiSendResponse($obj);
+        }
+
+        $user = UsersRepository::getInstance()->findOneBy(array('username'),array('shan'));
+        if($this->isAuthenticated($user,$password)){
+            $obj->error = false;
+            $obj->errorMsg = "login success";
+            $objUser = new \stdClass();
+            $objUser->username = $user->getUsername();
+            $objUser->password = $password;
+            $objUser->email = $user->getEmail();
+
+            $token = md5($username+rand(0,1000));
+
+            $obj->tokn = $token;
+
+            $userObject = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
+            $userObject->setToken($token);
+            $this->db()->update($userObject);
+
+            $userDetails = UserDetailsRepository::getInstance()->findOneBy(array('userId'),array($username));
+
+            $objUser->firstName = $userDetails->getFirstname();
+            $objUser->middleName = $userDetails->getLastname();
+            $objUser->middleName = $userDetails->getMiddlename();
+            $objUser->phone     = $userDetails->getPhone();
+
+            $obj->user = $objUser;
+
+            $dataArray = [];
+            $userData = DiseaseDataRepository::getInstance()->findBy(array('userId'),array($username));
+            foreach ($userData as $data){
+                $temp = new \stdClass();
+                $temp->diseaseDataId = $data->getDiseasedataid();
+                $temp->sysmptoms = $data->getSymptoms();
+                $temp->description = $data->getDescription();
+                $temp->victimCount = $data->getVictimcount();
+                $temp->locationCode = $data->getLocationcode();
+                $temp->entryId = $data->getEntryid();
+                $dataArray[] = $temp;
+            }
+
+            $obj->data = $dataArray;
+
+            return $this->apiSendResponse($obj);
+
+
+        }
+
+        $obj->error = true;
+        $obj->errorMsg = "Password does not match !";
+        $obj->token = null;
+        $obj->user = null;
+        $obj->data = null;
+
+        return $this->apiSendResponse($obj);
+
     }
 
     /**
@@ -141,9 +225,65 @@ class ApiController extends DefaultController
      */
     public function apiSyncDownAction(Request $request)
     {
-        $requestObject = $request->get('obj');
-        $register = $this->objectDeserialize($requestObject);
-        return new Response($register->id);
+        $requestObject = $request->get('data');
+        $syncUp = $this->objectDeserialize($requestObject);
+        $username = $syncUp->username;
+        $token = $syncUp->token;
+        $data = $syncUp->data;
+
+        $user = UsersRepository::getInstance()->findOneBy(array('username','token'),array($username,$token));
+
+        $obj = new \stdClass();
+
+        if($user!= null){
+            foreach ($data as $row){
+
+                $diseaseData = new DiseaseData();
+
+                $diseaseData->setEntryid($row->entryId);
+                $diseaseData->setUserid($username);
+                $diseaseData->setSymptoms($row->symptoms);
+                $diseaseData->setDescription($row->description);
+                $diseaseData->setVictimcount($row->victimCount);
+                $diseaseData->setLocationcode($row->locationCode);
+                $this->db()->insert($diseaseData);
+
+            }
+            return new Response("hi");
+
+        }
+
+
+
+//        return new Response($register->id);
     }
 
+    public function isUserExists($username, $email=""){
+        $query = "SELECT * FROM users WHERE username = '". $username . "' OR email = '" .$email. "' ";
+        $instance = DatabaseHandler::getInstance();
+        $results = $instance->query($query);
+        $instance->setResult($results);
+        if(!$instance->fetch()){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isAuthenticated($user,$password){
+
+        if(is_null($user)==false){
+            $encoder = $this->container->get('security.password_encoder');
+//            $encodedPsw = $encoder->encodePassword($user, $password);
+//            var_dump($encodedPsw);
+//            var_dump($user->getPassword());
+//            var_dump($encoder->isPasswordValid($user,$password));
+//            if($user->getPassword() == $encodedPsw){
+//                return true;
+//            }
+            return $encoder->isPasswordValid($user,$password);
+        }
+        return false;
+
+    }
 }
