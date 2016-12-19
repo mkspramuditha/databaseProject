@@ -196,7 +196,7 @@ class ApiController extends DefaultController
             $objUser->username = $user->getUsername();
             $objUser->password = $password;
             $objUser->email = $user->getEmail();
-
+            $objUser->roleId = $user->getRoles()[0];
             $token = md5($username+rand(0,1000));
 
             $obj->token = $token;
@@ -389,8 +389,15 @@ class ApiController extends DefaultController
      */
 
     public function testAction(Request $request){
-        $content = $request->getContent();
+        $content = $request->get('data');
+//        var_dump($request);
+//        var_dump($_POST['data']);
+        if($content == null){
+            var_dump("empty");
+        }
+//        var_dump("shan");
         var_dump($content);
+        exit;
         $name = $request->get('name');
 //        return new Response($name);
         return $this->apiSendResponse($name);
