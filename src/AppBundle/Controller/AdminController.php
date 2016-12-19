@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller;
 
+<<<<<<< HEAD
 use AppBundle\Repository\DiseaseDataRepository;
+=======
+>>>>>>> master
 use AppBundle\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,8 +56,12 @@ class AdminController extends DefaultController
     {
         $user = $this->getUser();
 
-        return $this->render('default/adminInsights.html.twig', array(
-            'user' => $user
+
+//        $users = UsersRepository::getInstance()->findAll();
+
+        return $this->render('default/adminDashboard.html.twig',array(
+            'user'=>$user,
+//            'users'=>$users
         ));
 
     }

@@ -104,6 +104,7 @@ class DatabaseHandler
 
     public function fetch(){
         if ($this->_result !== null) {
+//            var_dump($this->_result);
                 if (($row = mysqli_fetch_array($this->_result, MYSQLI_ASSOC)) === false) {
                     $this->freeResult();
                 }

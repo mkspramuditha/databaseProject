@@ -71,6 +71,7 @@ class DefaultController extends Controller
         $authenticationUtils = $this->get('security.authentication_utils');
 
         $error = $authenticationUtils->getLastAuthenticationError();
+//        var_dump($error);
         $lastUsername = $authenticationUtils->getLastUserName();
         return $this->render('default/adminLogin.html.twig', array(
             'last_username' => $lastUsername,
