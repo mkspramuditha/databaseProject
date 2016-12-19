@@ -41,11 +41,8 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-<<<<<<< HEAD
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.role = roles.roleid JOIN userdetails ON users.userid = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
-=======
+
         $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.roleId = roles.roleId JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
->>>>>>> master
         $results = $DBInstance->query($query);
 //        var_dump($results);
         $DBInstance->setResult($results);
@@ -80,7 +77,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-<<<<<<< HEAD
+
         $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
         print_r($query);
         $results = $DBInstance->query($query);
@@ -104,9 +101,7 @@ class UsersRepository extends AbstractRepository
 
         $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE users.username LIKE "%' . $username . '%" AND userdetails.firstname LIKE "%' . $firstname . '%" AND users.email LIKE "%' . $email . '%"';
         print_r($query);
-=======
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleId = roles.roleId JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
->>>>>>> master
+
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
