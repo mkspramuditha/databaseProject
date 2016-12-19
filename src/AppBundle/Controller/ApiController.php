@@ -276,8 +276,42 @@ class ApiController extends DefaultController
      */
     public function apiSyncDownAction(Request $request)
     {
+        $requestObject = $request->get('data');
+        $syncUp = $this->objectDeserialize($requestObject);
+        $username = $syncUp->username;
+        $token = $syncUp->token;
 
+        $user = UsersRepository::getInstance()->findOneBy(array('username','token'),array($username,$token));
 
+        $obj = new \stdClass();
+        if($user!= null){
+            $diseaseData = DiseaseDataRepository::getInstance()->findBy(array('userId'),array($username));
+            $diseaseDataArray = [];
+            foreach ($diseaseData as $row){
+                $temp = new \stdClass();
+
+//                $temp->diseaseDataId = $temp->getDiseasedataid();
+                $temp->symptoms = $temp->getSymptoms();
+                $temp->description =  $temp->getDescription();
+                $temp->victimCount = $temp->getVictimcount();
+                $temp->localtionId = $temp->getLocationcode();
+                $temp->entryId = $temp->getEntryid();
+
+                $diseaseDataArray[] = $temp;
+            }
+
+            $obj->error = false;
+            $obj->errorMsg = "Sync down successful !";
+            $obj->data = $diseaseDataArray;
+
+            return $this->apiSendResponse($obj);
+        }
+
+        $obj->error = true;
+        $obj->errorMsg = "Invalid authentication details";
+        $obj->data = null;
+
+        return $this->apiSendResponse($obj);
 
     }
 
