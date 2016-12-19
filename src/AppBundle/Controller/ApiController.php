@@ -63,9 +63,43 @@ class ApiController extends DefaultController
 //        $test->middleName = "shan";
 //        $test->lastName = "shan";
 //        $test->role = "ROLE_ADMIN";
-//
+//       $content =  $request->getContent("php://input");
+//       var_dump($content);
+//        if($content != null){
+//            var_dump("not null");
+//        }
+//        else{
+//            var_dump("null");
+//        }
+//        var_dump($_POST);
 //        var_dump($this->objectSerialize($test));
-
+//        $body = json_decode(file_get_contents('php://input'),true);
+//        var_dump($body);
+//        var_dump($_POST['data']);
+//        exit;
+//        $postvars = json_decode($body, true);
+//        $id = $postvars["username"];
+//        $name = $postvars["password"];
+//
+//        var_dump($id);
+//        exit;
+//        var_dump($request);
+//        exit;
+//        var_dump($_POST['data']);
+//        var_dump("Hi");
+//        $requestObject = $request->get('data');
+//        var_dump($requestObject);
+//        var_dump($request->getContent());
+//        exit;
+//        $requestObject = $_POST['data'];
+//        var_dump($request);
+//        var_dump($requestObject);
+//        exit;
+//        var_dump($requestObject);
+//        if($requestObject == null){
+//            var_dump("This is a null string");
+//            exit;
+//        }
         $requestObject = $request->get('data');
         $register   = $this->objectDeserialize($requestObject);
         $username   = $register->username;
@@ -342,5 +376,18 @@ class ApiController extends DefaultController
         }
         return false;
 
+    }
+
+
+    /**
+     * @Route("/test", name="test")
+     */
+
+    public function testAction(Request $request){
+        $content = $request->getContent();
+        var_dump($content);
+        $name = $request->get('name');
+//        return new Response($name);
+        return $this->apiSendResponse($name);
     }
 }

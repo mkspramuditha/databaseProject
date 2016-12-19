@@ -53,7 +53,7 @@ class DatabaseHandler
         $table = $entity->getTableName();
 
         $query = 'DELETE FROM ' . $table . ' WHERE id ='. $entity->getId() .' ';
-        var_dump($query);
+//        var_dump($query);
         $this->query($query);
     }
 
@@ -82,6 +82,10 @@ class DatabaseHandler
 
     public function quoteValue($value)
     {
+//        var_dump($value);
+        if(is_array($value)){
+            $value = $value[0];
+        }
         $this->connect();
         if ($value === null) {
             $value = 'NULL';
@@ -93,11 +97,11 @@ class DatabaseHandler
     }
 
     public function query($query){
-        print_r($query);
-        echo "<br>";
+//        print_r($query);
+//        echo "<br>";
         $connection = $this->connect();
         $results = mysqli_query($connection,$query);
-        print_r($connection->error);
+//        print_r($connection->error);
 
         return $results;
     }
