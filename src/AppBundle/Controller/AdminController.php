@@ -2,10 +2,9 @@
 
 namespace AppBundle\Controller;
 
-<<<<<<< HEAD
+
 use AppBundle\Repository\DiseaseDataRepository;
-=======
->>>>>>> master
+
 use AppBundle\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
