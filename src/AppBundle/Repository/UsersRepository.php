@@ -42,6 +42,7 @@ class UsersRepository extends AbstractRepository
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
         $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.roleId = roles.roleId JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+//        var_dump($query);
         $results = $DBInstance->query($query);
 //        var_dump($results);
         $DBInstance->setResult($results);
@@ -103,6 +104,7 @@ class UsersRepository extends AbstractRepository
 
         $user = new Users();
         $user->setId($row['id']);
+        var_dump($row['id']);
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);

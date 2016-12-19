@@ -199,10 +199,15 @@ class ApiController extends DefaultController
 
             $token = md5($username+rand(0,1000));
 
-            $obj->tokn = $token;
+            $obj->token = $token;
 
             $userObject = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
             $userObject->setToken($token);
+//            var_dump($userObject->getToken());
+//            var_dump($userObject->getUsername());
+//            var_dump($userObject->getRoles());
+//            var_dump($userObject->getId());
+
             $this->db()->update($userObject);
 
             $userDetails = UserDetailsRepository::getInstance()->findOneBy(array('userId'),array($username));
@@ -325,11 +330,11 @@ class ApiController extends DefaultController
                 $temp = new \stdClass();
 
 //                $temp->diseaseDataId = $temp->getDiseasedataid();
-                $temp->symptoms = $temp->getSymptoms();
-                $temp->description =  $temp->getDescription();
-                $temp->victimCount = $temp->getVictimcount();
-                $temp->localtionId = $temp->getLocationcode();
-                $temp->entryId = $temp->getEntryid();
+                $temp->symptoms = $row->getSymptoms();
+                $temp->description =  $row->getDescription();
+                $temp->victimCount = $row->getVictimcount();
+                $temp->localtionId = $row->getLocationcode();
+                $temp->entryId = $row->getEntryid();
 
                 $diseaseDataArray[] = $temp;
             }
