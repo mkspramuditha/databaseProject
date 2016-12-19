@@ -389,6 +389,10 @@ class ApiController extends DefaultController
      */
 
     public function testAction(Request $request){
+        $logger = $this->get('logger');
+        $logger->critical($request->getContent());
+        var_dump($request->getContent());
+        return new Response($request->getContent());
         $content = $request->get('data');
 //        var_dump($request);
 //        var_dump($_POST['data']);
@@ -401,5 +405,6 @@ class ApiController extends DefaultController
         $name = $request->get('name');
 //        return new Response($name);
         return $this->apiSendResponse($name);
+
     }
 }
