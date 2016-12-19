@@ -215,16 +215,6 @@ class ApiController extends DefaultController
      */
     public function apiSyncUpAction(Request $request)
     {
-        $requestObject = $request->get('obj');
-        $register = $this->objectDeserialize($requestObject);
-        return new Response($register->id);
-    }
-
-    /**
-     * @Route("/sync/down", name="apiSyncDown")
-     */
-    public function apiSyncDownAction(Request $request)
-    {
         $requestObject = $request->get('data');
         $syncUp = $this->objectDeserialize($requestObject);
         $username = $syncUp->username;
@@ -238,24 +228,57 @@ class ApiController extends DefaultController
         if($user!= null){
             foreach ($data as $row){
 
-                $diseaseData = new DiseaseData();
+                $disease = DiseaseDataRepository::getInstance()->findOneBy(array('entryId'),array($row->entryId));
 
-                $diseaseData->setEntryid($row->entryId);
-                $diseaseData->setUserid($username);
-                $diseaseData->setSymptoms($row->symptoms);
-                $diseaseData->setDescription($row->description);
-                $diseaseData->setVictimcount($row->victimCount);
-                $diseaseData->setLocationcode($row->locationCode);
-                $this->db()->insert($diseaseData);
+                if($disease != null){
+                    $diseaseData = $disease;
+
+
+                    $diseaseData->setEntryid($row->entryId);
+                    $diseaseData->setUserid($username);
+                    $diseaseData->setSymptoms($row->symptoms);
+                    $diseaseData->setDescription($row->description);
+                    $diseaseData->setVictimcount($row->victimCount);
+                    $diseaseData->setLocationcode($row->locationCode);
+                    $this->db()->update($diseaseData);
+                }
+                else{
+                    $diseaseData = new DiseaseData();
+
+                    $diseaseData->setEntryid($row->entryId);
+                    $diseaseData->setUserid($username);
+                    $diseaseData->setSymptoms($row->symptoms);
+                    $diseaseData->setDescription($row->description);
+                    $diseaseData->setVictimcount($row->victimCount);
+                    $diseaseData->setLocationcode($row->locationCode);
+                    $this->db()->insert($diseaseData);
+
+                }
 
             }
-            return new Response("hi");
+
+            $obj->error = false;
+            $obj->errorMsg = "Sync Up was successful";
+
+
+            return $this->apiSendResponse($obj);
 
         }
 
+        $obj->error = true;
+        $obj->errorMsg = "Invalid authentication details";
+
+        return $this->apiSendResponse($obj);
+    }
+
+    /**
+     * @Route("/sync/down", name="apiSyncDown")
+     */
+    public function apiSyncDownAction(Request $request)
+    {
 
 
-//        return new Response($register->id);
+
     }
 
     public function isUserExists($username, $email=""){
