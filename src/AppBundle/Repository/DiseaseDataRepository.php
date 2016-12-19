@@ -10,8 +10,10 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\DiseaseData;
+use AppBundle\Entity\Users;
 use AppBundle\Orm\AbstractRepository;
 use AppBundle\Orm\DatabaseHandler;
+use Symfony\Component\Security\Core\User\User;
 
 class DiseaseDataRepository extends AbstractRepository
 {
@@ -53,7 +55,7 @@ class DiseaseDataRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username';
+        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username JOIN userdetails ON diseasedata.userid = userdetails.userid';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -98,6 +100,8 @@ class DiseaseDataRepository extends AbstractRepository
     public function setObject($row)
     {
 
+        $user=UsersRepository::getInstance()->findBy(array('username'),array($row['userid']));
+
         $disease = new DiseaseData();
         $disease->setUserid($row['userid']);
         $disease->setDiseasedataid($row['diseasedataid']);
@@ -106,6 +110,7 @@ class DiseaseDataRepository extends AbstractRepository
         $disease->setVictimcount($row['victimcount']);
         $disease->setLocationcode($row['locationcode']);
         $disease->setEntryid($row['entryid']);
+        $disease->setUserObj($user);
 
         return $disease;
     }
