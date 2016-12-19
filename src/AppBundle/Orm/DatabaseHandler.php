@@ -82,6 +82,10 @@ class DatabaseHandler
 
     public function quoteValue($value)
     {
+//        var_dump($value);
+        if(is_array($value)){
+            $value = $value[0];
+        }
         $this->connect();
         if ($value === null) {
             $value = 'NULL';

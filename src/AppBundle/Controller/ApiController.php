@@ -63,9 +63,43 @@ class ApiController extends DefaultController
 //        $test->middleName = "shan";
 //        $test->lastName = "shan";
 //        $test->role = "ROLE_ADMIN";
-//
+//       $content =  $request->getContent("php://input");
+//       var_dump($content);
+//        if($content != null){
+//            var_dump("not null");
+//        }
+//        else{
+//            var_dump("null");
+//        }
+//        var_dump($_POST);
 //        var_dump($this->objectSerialize($test));
-
+//        $body = json_decode(file_get_contents('php://input'),true);
+//        var_dump($body);
+//        var_dump($_POST['data']);
+//        exit;
+//        $postvars = json_decode($body, true);
+//        $id = $postvars["username"];
+//        $name = $postvars["password"];
+//
+//        var_dump($id);
+//        exit;
+//        var_dump($request);
+//        exit;
+//        var_dump($_POST['data']);
+//        var_dump("Hi");
+//        $requestObject = $request->get('data');
+//        var_dump($requestObject);
+//        var_dump($request->getContent());
+//        exit;
+//        $requestObject = $_POST['data'];
+//        var_dump($request);
+//        var_dump($requestObject);
+//        exit;
+//        var_dump($requestObject);
+//        if($requestObject == null){
+//            var_dump("This is a null string");
+//            exit;
+//        }
         $requestObject = $request->get('data');
         $register   = $this->objectDeserialize($requestObject);
         $username   = $register->username;
@@ -165,10 +199,15 @@ class ApiController extends DefaultController
 
             $token = md5($username+rand(0,1000));
 
-            $obj->tokn = $token;
+            $obj->token = $token;
 
             $userObject = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
             $userObject->setToken($token);
+//            var_dump($userObject->getToken());
+//            var_dump($userObject->getUsername());
+//            var_dump($userObject->getRoles());
+//            var_dump($userObject->getId());
+
             $this->db()->update($userObject);
 
             $userDetails = UserDetailsRepository::getInstance()->findOneBy(array('userId'),array($username));
@@ -215,16 +254,6 @@ class ApiController extends DefaultController
      */
     public function apiSyncUpAction(Request $request)
     {
-        $requestObject = $request->get('obj');
-        $register = $this->objectDeserialize($requestObject);
-        return new Response($register->id);
-    }
-
-    /**
-     * @Route("/sync/down", name="apiSyncDown")
-     */
-    public function apiSyncDownAction(Request $request)
-    {
         $requestObject = $request->get('data');
         $syncUp = $this->objectDeserialize($requestObject);
         $username = $syncUp->username;
@@ -238,24 +267,91 @@ class ApiController extends DefaultController
         if($user!= null){
             foreach ($data as $row){
 
-                $diseaseData = new DiseaseData();
+                $disease = DiseaseDataRepository::getInstance()->findOneBy(array('entryId'),array($row->entryId));
 
-                $diseaseData->setEntryid($row->entryId);
-                $diseaseData->setUserid($username);
-                $diseaseData->setSymptoms($row->symptoms);
-                $diseaseData->setDescription($row->description);
-                $diseaseData->setVictimcount($row->victimCount);
-                $diseaseData->setLocationcode($row->locationCode);
-                $this->db()->insert($diseaseData);
+                if($disease != null){
+                    $diseaseData = $disease;
+
+
+                    $diseaseData->setEntryid($row->entryId);
+                    $diseaseData->setUserid($username);
+                    $diseaseData->setSymptoms($row->symptoms);
+                    $diseaseData->setDescription($row->description);
+                    $diseaseData->setVictimcount($row->victimCount);
+                    $diseaseData->setLocationcode($row->locationCode);
+                    $this->db()->update($diseaseData);
+                }
+                else{
+                    $diseaseData = new DiseaseData();
+
+                    $diseaseData->setEntryid($row->entryId);
+                    $diseaseData->setUserid($username);
+                    $diseaseData->setSymptoms($row->symptoms);
+                    $diseaseData->setDescription($row->description);
+                    $diseaseData->setVictimcount($row->victimCount);
+                    $diseaseData->setLocationcode($row->locationCode);
+                    $this->db()->insert($diseaseData);
+
+                }
 
             }
-            return new Response("hi");
+
+            $obj->error = false;
+            $obj->errorMsg = "Sync Up was successful";
+
+
+            return $this->apiSendResponse($obj);
 
         }
 
+        $obj->error = true;
+        $obj->errorMsg = "Invalid authentication details";
 
+        return $this->apiSendResponse($obj);
+    }
 
-//        return new Response($register->id);
+    /**
+     * @Route("/sync/down", name="apiSyncDown")
+     */
+    public function apiSyncDownAction(Request $request)
+    {
+        $requestObject = $request->get('data');
+        $syncUp = $this->objectDeserialize($requestObject);
+        $username = $syncUp->username;
+        $token = $syncUp->token;
+
+        $user = UsersRepository::getInstance()->findOneBy(array('username','token'),array($username,$token));
+
+        $obj = new \stdClass();
+        if($user!= null){
+            $diseaseData = DiseaseDataRepository::getInstance()->findBy(array('userId'),array($username));
+            $diseaseDataArray = [];
+            foreach ($diseaseData as $row){
+                $temp = new \stdClass();
+
+//                $temp->diseaseDataId = $temp->getDiseasedataid();
+                $temp->symptoms = $row->getSymptoms();
+                $temp->description =  $row->getDescription();
+                $temp->victimCount = $row->getVictimcount();
+                $temp->localtionId = $row->getLocationcode();
+                $temp->entryId = $row->getEntryid();
+
+                $diseaseDataArray[] = $temp;
+            }
+
+            $obj->error = false;
+            $obj->errorMsg = "Sync down successful !";
+            $obj->data = $diseaseDataArray;
+
+            return $this->apiSendResponse($obj);
+        }
+
+        $obj->error = true;
+        $obj->errorMsg = "Invalid authentication details";
+        $obj->data = null;
+
+        return $this->apiSendResponse($obj);
+
     }
 
     public function isUserExists($username, $email=""){
@@ -285,5 +381,18 @@ class ApiController extends DefaultController
         }
         return false;
 
+    }
+
+
+    /**
+     * @Route("/test", name="test")
+     */
+
+    public function testAction(Request $request){
+        $content = $request->getContent();
+        var_dump($content);
+        $name = $request->get('name');
+//        return new Response($name);
+        return $this->apiSendResponse($name);
     }
 }
