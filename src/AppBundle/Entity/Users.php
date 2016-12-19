@@ -6,12 +6,12 @@ use AppBundle\Orm\AbstractEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Users extends AbstractEntity implements UserInterface, \Serializable ,EquatableInterface
+class Users extends AbstractEntity implements UserInterface, \Serializable, EquatableInterface
 {
     private $_tableName = 'users';
     private $_repositoryName = 'UsersRepository';
-    private $_fieldNames = ['Id','Username','Password','Email','Roles','Status','Token'];
-    private $_columnNames = ['id','username','password','email','roleid','statusId','token'];
+    private $_fieldNames = ['Id', 'Username', 'Password', 'Email', 'Roles', 'Status', 'Token'];
+    private $_columnNames = ['id', 'username', 'password', 'email', 'roleid', 'statusId', 'token'];
 
     private $id;
     private $username;
@@ -20,7 +20,23 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
     private $roles;
     private $status;
     private $token;
+    private $userDetailsObj;
 
+    /**
+     * @return mixed
+     */
+    public function getUserDetailsObj()
+    {
+        return $this->userDetailsObj;
+    }
+
+    /**
+     * @param mixed $userDetailsObj
+     */
+    public function setUserDetailsObj($userDetailsObj)
+    {
+        $this->userDetailsObj = $userDetailsObj;
+    }
 
 
     public function __construct()
@@ -30,6 +46,7 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
         $this->setFieldNames($this->_fieldNames);
 
     }
+
     /**
      * @return mixed
      */
@@ -65,7 +82,7 @@ class Users extends AbstractEntity implements UserInterface, \Serializable ,Equa
     public function callGetMethod($name)
     {
         $object = $this;
-        return function() use($object, $name){
+        return function () use ($object, $name) {
             $args = func_get_args();
             return call_user_func_array(array($object, $name), $args);
         };

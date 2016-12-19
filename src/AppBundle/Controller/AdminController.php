@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\DiseaseDataRepository;
+use AppBundle\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,9 +36,11 @@ class AdminController extends DefaultController
     public function adminUsersAction(Request $request)
     {
         $user = $this->getUser();
+        $userList = UsersRepository::getInstance()->findBy(array('users.username'),array('shan'));
 
         return $this->render('default/adminUsers.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'userList'=>$userList
         ));
 
     }
