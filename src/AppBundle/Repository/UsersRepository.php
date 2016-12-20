@@ -42,7 +42,7 @@ class UsersRepository extends AbstractRepository
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
 
-        $query = 'SELECT * FROM ' . $table . '  JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+        $query = 'SELECT users.*, users.id AS thisId FROM ' . $table . '  JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
 //        var_dump($query);
         $results = $DBInstance->query($query);
 //        var_dump($results);
@@ -101,7 +101,7 @@ class UsersRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
 
         $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE users.username LIKE "%' . $username . '%" AND userdetails.firstname LIKE "%' . $firstname . '%" AND users.email LIKE "%' . $email . '%"';
-        print_r($query);
+//        print_r($query);
 
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
@@ -131,7 +131,7 @@ class UsersRepository extends AbstractRepository
 
 //        var_dump($row);
         $user = new Users();
-        $user->setId($row['id']);
+        $user->setId($row['thisId']);
 //        var_dump($row['id']);
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
