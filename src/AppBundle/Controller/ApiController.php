@@ -188,7 +188,7 @@ class ApiController extends DefaultController
             return $this->apiSendResponse($obj);
         }
 
-        $user = UsersRepository::getInstance()->findOneBy(array('username'),array('shan'));
+        $user = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
         if($this->isAuthenticated($user,$password)){
             $obj->error = false;
             $obj->errorMsg = "login success";
