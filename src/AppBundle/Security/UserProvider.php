@@ -15,12 +15,12 @@ class UserProvider implements UserProviderInterface
     {
         $connection = DatabaseHandler::getInstance()->connect();
 //        $query = "SELECT * FROM `users` WHERE `username` = '$username'";
-        $query = "SELECT * FROM `users` JOIN roles ON users.role = roles.id WHERE `username` = '$username' ";
-//        var_dump($query);
+        $query = "SELECT * FROM `users` JOIN roles ON users.roleId = roles.roleId WHERE `username` = '$username' ";
+        var_dump($query);
 
         $result  = mysqli_query($connection, $query);
-//        var_dump($connection->error);
-//        exit;
+        var_dump($connection->error);
+        exit;
         $row = mysqli_fetch_array($result);
         if($row !=null){
             $user = new Users();
