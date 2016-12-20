@@ -58,7 +58,7 @@ class UsersRepository extends AbstractRepository
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
 
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid  = roles.roleid JOIN userdetails ON users.userid = userdetails.userid';
+        $query = 'SELECT users.*, users.id AS thisId FROM ' . $table . ' JOIN roles ON users.roleid  = roles.roleid JOIN userdetails ON users.userid = userdetails.userid';
 
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
@@ -79,7 +79,7 @@ class UsersRepository extends AbstractRepository
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
 
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT users.*, users.id AS thisId FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE (' . $tableField . ') = (' . $values . ') ';
 //        print_r($query);
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
@@ -100,7 +100,7 @@ class UsersRepository extends AbstractRepository
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
 
-        $query = 'SELECT * FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE users.username LIKE "%' . $username . '%" AND userdetails.firstname LIKE "%' . $firstname . '%" AND users.email LIKE "%' . $email . '%"';
+        $query = 'SELECT users.*, users.id AS thisId FROM ' . $table . ' JOIN roles ON users.roleid = roles.roleid JOIN userdetails ON users.username = userdetails.userid WHERE users.username LIKE "%' . $username . '%" AND userdetails.firstname LIKE "%' . $firstname . '%" AND users.email LIKE "%' . $email . '%"';
 //        print_r($query);
 
         $results = $DBInstance->query($query);

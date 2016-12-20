@@ -42,7 +42,7 @@ class DiseaseDataRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+        $query = 'SELECT diseasedata.*, diseasedata.id AS thisId FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -55,7 +55,7 @@ class DiseaseDataRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username JOIN userdetails ON diseasedata.userid = userdetails.userid';
+        $query = 'SELECT diseasedata.*, diseasedata.id AS thisId FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username JOIN userdetails ON diseasedata.userid = userdetails.userid';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -74,7 +74,7 @@ class DiseaseDataRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT diseasedata.*, diseasedata.id AS thisId FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails ON diseasedata.entryid= entrydetails.entryid JOIN users ON diseasedata.userid = users.username WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
@@ -103,6 +103,7 @@ class DiseaseDataRepository extends AbstractRepository
         $user=UsersRepository::getInstance()->findBy(array('username'),array($row['userid']));
 
         $disease = new DiseaseData();
+        $disease->setId($row['thisId']);
         $disease->setUserid($row['userid']);
         $disease->setDiseasedataid($row['diseasedataid']);
         $disease->setSymptoms($row['symptoms']);

@@ -40,7 +40,7 @@ class EntryDetailsRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
+        $query = 'SELECT entrydetails.*, entrydetails.id AS thisId FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') LIMIT 1';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetch();
@@ -53,7 +53,7 @@ class EntryDetailsRepository extends AbstractRepository
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT * FROM ' . $table;
+        $query = 'SELECT entrydetails.*, entrydetails.id AS thisId  FROM ' . $table;
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -72,7 +72,7 @@ class EntryDetailsRepository extends AbstractRepository
         $DBInstance = DatabaseHandler::getInstance();
         $tableField = implode(',', $field);
         $values = implode(',', array_map(array($DBInstance, 'quoteValue'), array_values($values)));
-        $query = 'SELECT * FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') ';
+        $query = 'SELECT entrydetails.*, entrydetails.id AS thisId FROM ' . $table . '  WHERE (' . $tableField . ') = (' . $values . ') ';
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
 //        var_dump($DBInstance->getResult());
@@ -100,6 +100,7 @@ class EntryDetailsRepository extends AbstractRepository
 
 
         $entrydetails = new EntryDetails();
+        $entrydetails->setId($row['thisId']);
         $entrydetails->setEntryid($row['entryid']);
         $entrydetails->setDatetime($row['datetime']);
 
