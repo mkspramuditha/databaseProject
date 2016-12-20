@@ -22,6 +22,7 @@ class AdminController extends DefaultController
     {
         $userCount = count(UsersRepository::getInstance()->findAll());
         $totalEntries = count(DiseaseDataRepository::getInstance()->findAll());
+        $approves = count(UsersRepository::getInstance()->findBy(array('statusId'),array('STATUS_PENDING')));
 
 //        var_dump($userCount);
 //        var_dump($totalEntries);
@@ -35,7 +36,8 @@ class AdminController extends DefaultController
             'user' => $user,
             'recentData'=>$recentData,
             'title'=>$title,
-            'totalEntries'=>$totalEntries
+            'totalEntries'=>$totalEntries,
+            'unapprovedCount'=>$approves
 
         ));
 
@@ -104,6 +106,33 @@ class AdminController extends DefaultController
         return $this->render('default/adminSettings.html.twig', array(
             'user' => $user,
             'title'=>$title
+        ));
+
+    }
+
+
+    /**
+     * @Route("admin/approve", name="adminApprove")
+     */
+
+    public function adminApproveAction(Request $request)
+    {
+        $approveId = $request->get('id');
+//        var_dump($approveId);
+        if($approveId != null and $approveId !== ""){
+            $user = UsersRepository::getInstance()->findOneBy(array('users.id'),array($approveId));
+            $user->setStatus('STATUS_ACTIVE');
+            $this->db()->update($user);
+        }
+        $title = 'approve';
+
+        $approves = UsersRepository::getInstance()->findBy(array('statusId'),array('STATUS_PENDING'));
+        $user = $this->getUser();
+
+        return $this->render('default/adminApprove.html.twig', array(
+            'user' => $user,
+            'title'=>$title,
+            'approves'=>$approves
         ));
 
     }

@@ -1,0 +1,57 @@
+{% extends 'baseBackend.html.twig' %}
+
+{% block title %}Admin Approve{% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+    <div class="page-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Overview</h1>
+            {#<p>Start a beautiful journey here</p>#}
+        </div>
+        <div>
+            <ul class="breadcrumb">
+                <li><i class="fa fa-home fa-lg"></i></li>
+                <li><a href="{{ url('adminApprove') }}">Overview</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+
+                <h3 class="card-title">Recent Epidemic Entries</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>First Name</th>
+                        <th>Email</th>
+                        <th>Phone No</th>
+                        <th>Approve</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in approves %}
+
+                        <tr>
+                            <td>{{ data.username}}</td>
+                            {#<td>{{ data.getUserObj.getFirstname }} {{ data.getUserObj.getMiddlename }}</td>#}
+                            <td>{{ data.roles[0] }}</td>
+                            <td>{{ data.userDetailsObj.firstName }}</td>
+                            <td>{{ data.email }}</td>
+                            <td>{{ data.userDetailsObj.phone }}</td>
+                            <td><a href="{{ url('adminApprove',{id:data.id}) }}" class="btn btn-success">Approve</a></td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
