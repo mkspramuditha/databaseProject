@@ -99,14 +99,7 @@ class AdminController extends DefaultController
 
     public function testAction(Request $request)
     {
-        $user = UsersRepository::getInstance()->findOneBy(array('username'),array('arunan1'));
-//        var_dump($user->getId());
-//        var_dump($user->getUsername());
-//        $user = $this->getUser();
-//
-//        return $this->render('default/adminSettings.html.twig', array(
-//            'user' => $user
-//        ));
+        exit;
 
     }
 
