@@ -191,7 +191,20 @@ class ApiController extends DefaultController
         }
 
         $user = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
-//        var_dump($user->getId());
+
+        if($user->getStatus() !== "STATUS_ACTIVE"){
+
+            $obj->error = true;
+            $obj->errorMsg = "User is in the ".$user->getStatus()." mode";
+            $obj->token = null;
+            $obj->user = null;
+            $obj->data = null;
+
+            return $this->apiSendResponse($obj);
+
+        }
+
+        //        var_dump($user->getId());
         if($this->isAuthenticated($user,$password)){
             $obj->error = false;
             $obj->errorMsg = "login success";
