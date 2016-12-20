@@ -80,4 +80,21 @@ class AdminController extends DefaultController
     }
 
 
+    /**
+     * @Route("/test", name="test")
+     */
+
+    public function testAction(Request $request)
+    {
+        $user = UsersRepository::getInstance()->findOneBy(array('username'),array('shan'));
+        var_dump($user->getId());
+//        $user = $this->getUser();
+//
+//        return $this->render('default/adminSettings.html.twig', array(
+//            'user' => $user
+//        ));
+
+    }
+
+
 }

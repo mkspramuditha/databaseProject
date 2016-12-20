@@ -189,6 +189,7 @@ class ApiController extends DefaultController
         }
 
         $user = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
+//        var_dump($user->getId());
         if($this->isAuthenticated($user,$password)){
             $obj->error = false;
             $obj->errorMsg = "login success";
@@ -201,14 +202,15 @@ class ApiController extends DefaultController
 
             $obj->token = $token;
 
-            $userObject = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
-            $userObject->setToken($token);
+//            $userObject = UsersRepository::getInstance()->findOneBy(array('username'),array($username));
+//            $userObject->setToken($token);
+//            var_dump($userObject->getId());
 //            var_dump($userObject->getToken());
 //            var_dump($userObject->getUsername());
 //            var_dump($userObject->getRoles());
 //            var_dump($userObject->getId());
-
-            $this->db()->update($userObject);
+            $user->setToken($token);
+            $this->db()->update($user);
 
             $userDetails = UserDetailsRepository::getInstance()->findOneBy(array('userId'),array($username));
 
@@ -385,7 +387,7 @@ class ApiController extends DefaultController
 
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/test", name="testsa")
      */
 
     public function testAction(Request $request){

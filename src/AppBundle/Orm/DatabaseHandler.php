@@ -53,7 +53,7 @@ class DatabaseHandler
         $table = $entity->getTableName();
 
         $query = 'DELETE FROM ' . $table . ' WHERE id ='. $entity->getId() .' ';
-        var_dump($query);
+//        var_dump($query);
         $this->query($query);
     }
 
