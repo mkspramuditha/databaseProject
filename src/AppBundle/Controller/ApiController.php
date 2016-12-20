@@ -393,16 +393,16 @@ class ApiController extends DefaultController
     public function testAction(Request $request){
         $logger = $this->get('logger');
         $logger->critical($request->getContent());
-        var_dump($request->getContent());
+//        var_dump($request->getContent());
         return new Response($request->getContent());
         $content = $request->get('data');
 //        var_dump($request);
 //        var_dump($_POST['data']);
         if($content == null){
-            var_dump("empty");
+//            var_dump("empty");
         }
 //        var_dump("shan");
-        var_dump($content);
+//        var_dump($content);
         exit;
         $name = $request->get('name');
 //        return new Response($name);

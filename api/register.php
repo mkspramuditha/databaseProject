@@ -23,7 +23,7 @@ $response = curl_exec($ch);
 
 curl_close($ch);
 
-var_dump($response);
+//var_dump($response);
 
 ?>
 

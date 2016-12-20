@@ -15,4 +15,4 @@
 //// the "params1" is from the map.put("param1", "example"); in the android code
 //// if you make a "echo $my_value;" it will return a STRING value "example"
 
-var_dump($_POST['data']);
+//var_dump($_POST['data']);

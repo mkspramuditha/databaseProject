@@ -11,7 +11,7 @@ class DiseaseData extends AbstractEntity
     private $_tableName = 'diseasedata';
     private $_repositoryName = 'DiseaseDataRepository';
     private $_fieldNames = ['Id', 'Userid', 'Diseasedataid', 'Symptoms', 'Description', 'Victimcount', 'Locationcode', 'Entryid'];
-    private $_columnNames = ['id', 'userid', 'diseasedataid', 'symptoms', 'description', 'victimcount', 'locationcode', 'entryid'];
+    private $_columnNames = ['id', 'userid', 'diseasedataid', 'symptoms', 'description', 'victimcount', 'locationid', 'entryid'];
 
     private $id;
     private $userid;
