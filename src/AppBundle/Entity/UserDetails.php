@@ -10,8 +10,8 @@ class UserDetails extends AbstractEntity
 {
     private $_tableName = 'userdetails';
     private $_repositoryName = 'UserDetailsRepository';
-    private $_fieldNames = ['Id', 'Userid', 'FirstName', 'MiddleName', 'LastName', 'Phone', 'Email'];
-    private $_columnNames = ['id', 'userid', 'firstname', 'middlename', 'lastname', 'phone', 'email'];
+    private $_fieldNames = ['Id', 'Userid', 'FirstName', 'MiddleName', 'LastName', 'Phone'];
+    private $_columnNames = ['id', 'userid', 'firstname', 'middlename', 'lastname', 'phone'];
 
     private $id;
     private $userid;
@@ -19,7 +19,7 @@ class UserDetails extends AbstractEntity
     private $middlename;
     private $lastname;
     private $phone;
-    private $email;
+
 
     /**
      * @return mixed
@@ -117,21 +117,7 @@ class UserDetails extends AbstractEntity
         $this->phone = $phone;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
 
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
     //=================================================================
 
 
