@@ -233,7 +233,13 @@ class DatabaseHandler
      */
     public function setResult($result)
     {
-        $this->_result = $result;
+        if($result!= null){
+            $this->_result = $result;
+        }
+        else{
+            $this->_result = null;
+        }
+
     }
 
 

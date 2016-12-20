@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\DiseaseData;
+use AppBundle\Entity\EntryDetails;
 use AppBundle\Entity\UserDetails;
 use AppBundle\Entity\Users;
 use AppBundle\Orm\DatabaseHandler;
 use AppBundle\Repository\DiseaseDataRepository;
+use AppBundle\Repository\EntryDetailsRepository;
 use AppBundle\Repository\UserDetailsRepository;
 use AppBundle\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -263,18 +265,23 @@ class ApiController extends DefaultController
         $data = $syncUp->data;
 
         $user = UsersRepository::getInstance()->findOneBy(array('username','token'),array($username,$token));
-
+//        var_dump($user);
         $obj = new \stdClass();
 
-        if($user!= null){
+        if($user!== null){
             foreach ($data as $row){
+//                var_dump($row->entryId);
 
                 $disease = DiseaseDataRepository::getInstance()->findOneBy(array('entryid'),array($row->entryId));
+//                var_dump($disease);
+//                exit;
 
-                if($disease != null){
+                if($disease !== null){
                     $diseaseData = $disease;
 
-
+//                    var_dump('shan');
+//                    var_dump($diseaseData->getId());
+//                    exit;
                     $diseaseData->setEntryid($row->entryId);
                     $diseaseData->setUserid($username);
                     $diseaseData->setSymptoms($row->symptoms);
@@ -282,10 +289,19 @@ class ApiController extends DefaultController
                     $diseaseData->setVictimcount($row->victimCount);
                     $diseaseData->setLocationcode($row->locationCode);
                     $this->db()->update($diseaseData);
+
+                    $entryDetails = EntryDetailsRepository::getInstance()->findOneBy(array('entryid'),array($row->entryId));
+
+                    $date = new \DateTime('now');
+                    $formatDate = $date->format('Y-m-d H:i:s');
+
+                    $entryDetails->setDatetime($formatDate);
+
+                    $this->db()->update($entryDetails);
                 }
                 else{
                     $diseaseData = new DiseaseData();
-
+//                    var_dump('shan 1');
                     $diseaseData->setEntryid($row->entryId);
                     $diseaseData->setUserid($username);
                     $diseaseData->setSymptoms($row->symptoms);
@@ -294,6 +310,14 @@ class ApiController extends DefaultController
                     $diseaseData->setLocationcode($row->locationCode);
                     $this->db()->insert($diseaseData);
 
+                    $entryDetails = new EntryDetails();
+                    $entryDetails->setEntryid($row->entryId);
+
+                    $date = new \DateTime('now');
+                    $formatDate = $date->format('Y-m-d H:i:s');
+
+                    $entryDetails->setDatetime($formatDate);
+                    $this->db()->insert($entryDetails);
                 }
 
             }

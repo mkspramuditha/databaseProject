@@ -127,6 +127,9 @@ class UsersRepository extends AbstractRepository
 
     public function setObject($row)
     {
+        if($row == null){
+            return null;
+        }
         $userdetails = UserDetailsRepository::getInstance()->findBy(array('userid'), array($row['username']));
 
 //        var_dump($row);

@@ -51,11 +51,16 @@ class DiseaseDataRepository extends AbstractRepository
 
     }
 
-    public function findAll()
+    public function findAll($order = "")
     {
         $table = $this->_tableName;
         $DBInstance = DatabaseHandler::getInstance();
-        $query = 'SELECT diseasedata.*, diseasedata.id AS thisId FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails USING(entryid) JOIN users ON diseasedata.userid = users.username JOIN userdetails ON diseasedata.userid = userdetails.userid';
+        if($order != null){
+            $query = 'SELECT diseasedata.*, diseasedata.id AS thisId FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails USING(entryid) JOIN users ON diseasedata.userid = users.username JOIN userdetails ON diseasedata.userid = userdetails.userid ORDER BY '.$order.' ';
+        }
+        else{
+            $query = 'SELECT diseasedata.*, diseasedata.id AS thisId FROM ' . $table . ' JOIN location ON diseasedata.locationid = location.locationcode  JOIN entrydetails USING(entryid) JOIN users ON diseasedata.userid = users.username JOIN userdetails ON diseasedata.userid = userdetails.userid';
+        }
         $results = $DBInstance->query($query);
         $DBInstance->setResult($results);
         $row = $DBInstance->fetchArray();
@@ -99,6 +104,9 @@ class DiseaseDataRepository extends AbstractRepository
 
     public function setObject($row)
     {
+        if($row == null){
+            return null;
+        }
 
         $user=UsersRepository::getInstance()->findBy(array('username'),array($row['userid']));
 
