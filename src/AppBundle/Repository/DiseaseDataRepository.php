@@ -108,8 +108,8 @@ class DiseaseDataRepository extends AbstractRepository
             return null;
         }
 
-        $user=UsersRepository::getInstance()->findBy(array('username'),array($row['userid']));
-
+        $user=UsersRepository::getInstance()->findOneBy(array('username'),array($row['userid']));
+        $entry=EntryDetailsRepository::getInstance()->findOneBy(array('entryid'),array($row['entryid']));
         $disease = new DiseaseData();
         $disease->setId($row['thisId']);
         $disease->setUserid($row['userid']);
@@ -120,6 +120,7 @@ class DiseaseDataRepository extends AbstractRepository
         $disease->setLocationcode($row['locationid']);
         $disease->setEntryid($row['entryid']);
         $disease->setUserObj($user);
+        $disease->setEntryDetailsObj($entry);
 
         return $disease;
     }

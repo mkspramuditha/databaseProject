@@ -21,6 +21,7 @@ class DiseaseData extends AbstractEntity
     private $victimcount;
     private $locationcode;
     private $entryid;
+    private $entryDetailsObj;
 
     /**
      * @return mixed
@@ -251,6 +252,22 @@ class DiseaseData extends AbstractEntity
     public function setFieldNames($fieldNames)
     {
         $this->_fieldNames = $fieldNames;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntryDetailsObj()
+    {
+        return $this->entryDetailsObj;
+    }
+
+    /**
+     * @param mixed $entryDetailsObj
+     */
+    public function setEntryDetailsObj($entryDetailsObj)
+    {
+        $this->entryDetailsObj = $entryDetailsObj;
     }
 
 
