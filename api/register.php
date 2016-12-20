@@ -10,9 +10,9 @@ $string = http_build_query($post);
 //];
 
 
-$ch = curl_init('http://localhost/databaseProject/web/app.php/api/test');
+$ch = curl_init('http://localhost/databaseProject/web/app_dev.php/api/test');
 curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
 //curl_setopt($ch,CURLOPT_HEADER, false);
@@ -26,3 +26,4 @@ curl_close($ch);
 var_dump($response);
 
 ?>
+
