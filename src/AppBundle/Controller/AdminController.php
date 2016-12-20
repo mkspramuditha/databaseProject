@@ -22,6 +22,7 @@ class AdminController extends DefaultController
     public function adminDashboardAction(Request $request)
     {
         $userCount = count(UserDetailsRepository::getInstance()->findAll());
+        $totalEntries = count(UsersRepository::getInstance()->findAll());
         $title = 'dashboard';
         $user = $this->getUser();
         $recentData = DiseaseDataRepository::getInstance()->findAll();
@@ -31,6 +32,7 @@ class AdminController extends DefaultController
             'user' => $user,
             'recentData'=>$recentData,
             'title'=>$title,
+            'totalEntries'=>$totalEntries
 
         ));
 

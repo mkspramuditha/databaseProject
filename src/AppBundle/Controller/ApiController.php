@@ -269,7 +269,7 @@ class ApiController extends DefaultController
         if($user!= null){
             foreach ($data as $row){
 
-                $disease = DiseaseDataRepository::getInstance()->findOneBy(array('entryId'),array($row->entryId));
+                $disease = DiseaseDataRepository::getInstance()->findOneBy(array('thisEntryId'),array($row->entryId));
 
                 if($disease != null){
                     $diseaseData = $disease;
