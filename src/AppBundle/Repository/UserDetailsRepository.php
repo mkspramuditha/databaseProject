@@ -107,7 +107,7 @@ class UserDetailsRepository extends AbstractRepository
         $userdetails->setMiddlename($row['middlename']);
         $userdetails->setLastname($row['lastname']);
         $userdetails->setPhone($row['phone']);
-        $userdetails->setEmail($row['email']);
+//        $userdetails->setEmail($row['email']);
 
 
         return $userdetails;

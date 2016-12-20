@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                                 <div class="col-lg-10">
-                                    <input id="inputEmail" type="text" placeholder="Email" name="email" class="form-control">
+                                    <input id="inputEmail" value="{{ email }}" type="text" placeholder="Email" name="email" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Username</label>
                                 <div class="col-lg-10">
-                                    <input id="inputEmail" type="text" placeholder="Email" name="username" class="form-control">
+                                    <input id="inputEmail" value="{{ username }}" type="text" placeholder="Username" name="username" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -46,20 +46,20 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">First Name</label>
                                 <div class="col-lg-10">
-                                    <input id="inputEmail" type="text"  name="firstName" placeholder="Email" class="form-control">
+                                    <input id="inputEmail" value="{{ firstName }}" type="text"  name="firstName" placeholder="First Name" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                                <label for="inputEmail" class="col-lg-2 control-label">Phone No</label>
                                 <div class="col-lg-10">
-                                    <input id="inputEmail" type="text" placeholder="Email" class="form-control">
+                                    <input id="inputEmail" value="{{ phoneNo }}" type="text" name="PhoneNo" placeholder="Phone No" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <button class="btn btn-primary pull-right">Filter</button>
+                            <button type="submit" class="btn btn-primary pull-right">Filter</button>
 
                         </div>
                     </fieldset>
@@ -82,11 +82,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for data in userList %}
+                            {% for data in users %}
 
                                 <tr>
-                                    <td>{{ data.getUsername }}</td>
-
+                                    <td></td>
+                                    <td>{{ data.userDetailsObj.firstName }}</td>
+                                    <td>{{ data.userDetailsObj.lastName }}</td>
+                                    <td>{{ data.username }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

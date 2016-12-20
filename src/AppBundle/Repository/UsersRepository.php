@@ -130,7 +130,7 @@ class UsersRepository extends AbstractRepository
         if($row == null){
             return null;
         }
-        $userdetails = UserDetailsRepository::getInstance()->findBy(array('userid'), array($row['username']));
+        $userdetails = UserDetailsRepository::getInstance()->findOneBy(array('userid'), array($row['username']));
 
 //        var_dump($row);
         $user = new Users();

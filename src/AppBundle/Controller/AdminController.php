@@ -47,14 +47,27 @@ class AdminController extends DefaultController
 
     public function adminUsersAction(Request $request)
     {
+        $email = $request->get('email');
+        $username = $request->get('username');
+        $firstName = $request->get('firstName');
+        $phoneNo = $request->get('phoneNo');
+
+
+        $userList = UsersRepository::getInstance()->findLike($username,$firstName,$email);
+
         $title = 'users';
         $user = $this->getUser();
-        $userList = UsersRepository::getInstance()->findBy(array('users.username'),array('shan'));
+//        $userList = UsersRepository::getInstance()->findBy(array('users.username'),array('shan'));
 
         return $this->render('default/adminUsers.html.twig', array(
             'user' => $user,
             'userList'=>$userList,
-            'title'=>$title
+            'title'=>$title,
+            'email'=>$email,
+            'username'=>$username,
+            'firstName'=>$firstName,
+            'phoneNo'=>$phoneNo,
+            'users'=>$userList
         ));
 
     }
