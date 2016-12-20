@@ -19,7 +19,7 @@ class UserProvider implements UserProviderInterface
 //        var_dump($query);
 
         $result  = mysqli_query($connection, $query);
-        var_dump($connection->error);
+//        var_dump($connection->error);
 //        exit;
         $row = mysqli_fetch_array($result);
         if($row !=null){

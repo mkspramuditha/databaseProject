@@ -21,8 +21,11 @@ class AdminController extends DefaultController
 
     public function adminDashboardAction(Request $request)
     {
-        $userCount = count(UserDetailsRepository::getInstance()->findAll());
-        $totalEntries = count(UsersRepository::getInstance()->findAll());
+        $userCount = count(UsersRepository::getInstance()->findAll());
+        $totalEntries = count(DiseaseDataRepository::getInstance()->findAll());
+//        var_dump($userCount);
+//        var_dump($totalEntries);
+//        exit;
         $title = 'dashboard';
         $user = $this->getUser();
         $recentData = DiseaseDataRepository::getInstance()->findAll();

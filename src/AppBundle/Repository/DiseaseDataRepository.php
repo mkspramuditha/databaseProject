@@ -109,7 +109,7 @@ class DiseaseDataRepository extends AbstractRepository
         $disease->setSymptoms($row['symptoms']);
         $disease->setDescription($row['description']);
         $disease->setVictimcount($row['victimcount']);
-        $disease->setLocationcode($row['locationcode']);
+        $disease->setLocationcode($row['locationid']);
         $disease->setEntryid($row['entryid']);
         $disease->setUserObj($user);
 
