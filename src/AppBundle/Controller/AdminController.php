@@ -20,13 +20,14 @@ class AdminController extends DefaultController
 
     public function adminDashboardAction(Request $request)
     {
+        $title = 'dashboard';
         $user = $this->getUser();
         $recentData = DiseaseDataRepository::getInstance()->findAll();
 //        print_r($recentData);
         return $this->render('default/adminDashboard.html.twig', array(
             'user' => $user,
-            'recentData'=>$recentData
-
+            'recentData'=>$recentData,
+            'title'=>$title
         ));
 
     }
@@ -37,12 +38,14 @@ class AdminController extends DefaultController
 
     public function adminUsersAction(Request $request)
     {
+        $title = 'users';
         $user = $this->getUser();
         $userList = UsersRepository::getInstance()->findBy(array('users.username'),array('shan'));
 
         return $this->render('default/adminUsers.html.twig', array(
             'user' => $user,
-            'userList'=>$userList
+            'userList'=>$userList,
+            'title'=>$title
         ));
 
     }
@@ -53,6 +56,7 @@ class AdminController extends DefaultController
 
     public function adminInsightsAction(Request $request)
     {
+        $title = 'insights';
         $user = $this->getUser();
 
 
@@ -61,6 +65,7 @@ class AdminController extends DefaultController
         return $this->render('default/adminDashboard.html.twig',array(
             'user'=>$user,
 //            'users'=>$users
+            'title'=>$title
         ));
 
     }
