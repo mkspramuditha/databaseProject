@@ -97,11 +97,11 @@ class DatabaseHandler
     }
 
     public function query($query){
-        print_r($query);
-        echo "<br>";
+//        print_r($query);
+//        echo "<br>";
         $connection = $this->connect();
         $results = mysqli_query($connection,$query);
-        print_r($connection->error);
+//        print_r($connection->error);
 
         return $results;
     }
