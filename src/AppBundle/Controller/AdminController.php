@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Repository\DiseaseDataRepository;
 
+use AppBundle\Repository\UserDetailsRepository;
 use AppBundle\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,14 +21,17 @@ class AdminController extends DefaultController
 
     public function adminDashboardAction(Request $request)
     {
+        $userCount = count(UserDetailsRepository::getInstance()->findAll());
         $title = 'dashboard';
         $user = $this->getUser();
         $recentData = DiseaseDataRepository::getInstance()->findAll();
 //        print_r($recentData);
         return $this->render('default/adminDashboard.html.twig', array(
+            'userCount'=>$userCount,
             'user' => $user,
             'recentData'=>$recentData,
-            'title'=>$title
+            'title'=>$title,
+
         ));
 
     }
@@ -76,10 +80,12 @@ class AdminController extends DefaultController
 
     public function adminSettingsAction(Request $request)
     {
+        $title = 'settings';
         $user = $this->getUser();
 
         return $this->render('default/adminSettings.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'title'=>$title
         ));
 
     }

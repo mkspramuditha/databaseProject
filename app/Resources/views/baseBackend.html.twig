@@ -59,10 +59,10 @@
             </div>
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
-                <li class="active"><a href="{{ url('adminDashboard') }}"><i class="fa fa-dashboard"></i><span>Overview</span></a></li>
-                <li><a href="{{ url('adminUsers') }}"><i class="fa fa-user"></i><span>Users</span></a></li>
-                <li><a href="{{ url('adminInsights') }}"><i class="fa fa-bar-chart"></i><span>Insights</span></a></li>
-                <li><a href="{{ url('adminSettings') }}"><i class="fa fa-cog"></i><span>Settings</span></a></li>
+                <li {% if(title == 'dashboard')  %} class="active" {% endif %} ><a href="{{ url('adminDashboard') }}"><i class="fa fa-dashboard"></i><span>Overview</span></a></li>
+                <li {% if(title == 'users')  %} class="active" {% endif %} ><a href="{{ url('adminUsers') }}"><i class="fa fa-user"></i><span>Users</span></a></li>
+                <li {% if(title == 'insights')  %} class="active" {% endif %} ><a href="{{ url('adminInsights') }}"><i class="fa fa-bar-chart"></i><span>Insights</span></a></li>
+                <li {% if(title == 'settings')  %} class="active" {% endif %} ><a href="{{ url('adminSettings') }}"><i class="fa fa-cog"></i><span>Settings</span></a></li>
 
             </ul>
         </section>
