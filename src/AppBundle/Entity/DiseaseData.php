@@ -10,17 +10,33 @@ class DiseaseData extends AbstractEntity
 {
     private $_tableName = 'diseasedata';
     private $_repositoryName = 'DiseaseDataRepository';
-    private $_fieldNames = ['Id', 'Userid', 'Diseasedataid', 'Symptoms', 'Description', 'Victimcount', 'Locationcode', 'Entryid'];
-    private $_columnNames = ['id', 'userid', 'diseasedataid', 'symptoms', 'description', 'victimcount', 'locationid', 'entryid'];
+    private $_fieldNames = ['Id', 'Userid', 'Title', 'Symptoms', 'Description', 'Victimcount', 'Locationcode', 'Entryid'];
+    private $_columnNames = ['id', 'userid', 'title', 'symptoms', 'description', 'victimcount', 'locationid', 'entryid'];
 
     private $id;
     private $userid;
-    private $diseasedataid;
+    private $title;
     private $symptoms;
     private $description;
     private $victimcount;
     private $locationcode;
     private $entryid;
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
     private $userObj;
 
     /**
@@ -71,21 +87,7 @@ class DiseaseData extends AbstractEntity
         $this->userid = $userid;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDiseasedataid()
-    {
-        return $this->diseasedataid;
-    }
 
-    /**
-     * @param mixed $diseasedataid
-     */
-    public function setDiseasedataid($diseasedataid)
-    {
-        $this->diseasedataid = $diseasedataid;
-    }
 
     /**
      * @return mixed

@@ -113,7 +113,7 @@ class DiseaseDataRepository extends AbstractRepository
         $disease = new DiseaseData();
         $disease->setId($row['thisId']);
         $disease->setUserid($row['userid']);
-        $disease->setDiseasedataid($row['diseasedataid']);
+        $disease->setTitle($row['title']);
         $disease->setSymptoms($row['symptoms']);
         $disease->setDescription($row['description']);
         $disease->setVictimcount($row['victimcount']);

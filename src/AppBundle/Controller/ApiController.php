@@ -227,8 +227,9 @@ class ApiController extends DefaultController
             $userData = DiseaseDataRepository::getInstance()->findBy(array('userId'),array($username));
             foreach ($userData as $data){
                 $temp = new \stdClass();
-                $temp->diseaseDataId = $data->getDiseasedataid();
-                $temp->sysmptoms = $data->getSymptoms();
+//                $temp->diseaseDataId = $data->getDiseasedataid();
+                $temp->title = $data->getTitle();
+                $temp->symptoms = $data->getSymptoms();
                 $temp->description = $data->getDescription();
                 $temp->victimCount = $data->getVictimcount();
                 $temp->locationCode = $data->getLocationcode();
@@ -283,6 +284,7 @@ class ApiController extends DefaultController
 //                    var_dump($diseaseData->getId());
 //                    exit;
                     $diseaseData->setEntryid($row->entryId);
+                    $diseaseData->setTitle($row->title);
                     $diseaseData->setUserid($username);
                     $diseaseData->setSymptoms($row->symptoms);
                     $diseaseData->setDescription($row->description);
@@ -303,6 +305,7 @@ class ApiController extends DefaultController
                     $diseaseData = new DiseaseData();
 //                    var_dump('shan 1');
                     $diseaseData->setEntryid($row->entryId);
+                    $diseaseData->setTitle($row->title);
                     $diseaseData->setUserid($username);
                     $diseaseData->setSymptoms($row->symptoms);
                     $diseaseData->setDescription($row->description);
@@ -357,6 +360,7 @@ class ApiController extends DefaultController
 
 //                $temp->diseaseDataId = $temp->getDiseasedataid();
                 $temp->symptoms = $row->getSymptoms();
+                $temp->title = $row->getTitle();
                 $temp->description =  $row->getDescription();
                 $temp->victimCount = $row->getVictimcount();
                 $temp->localtionId = $row->getLocationcode();

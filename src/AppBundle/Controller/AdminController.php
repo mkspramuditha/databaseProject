@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class AdminController extends DefaultController
 {
-
     /**
      * @Route("admin/dashboard", name="adminDashboard")
      */
@@ -23,6 +22,7 @@ class AdminController extends DefaultController
     {
         $userCount = count(UsersRepository::getInstance()->findAll());
         $totalEntries = count(DiseaseDataRepository::getInstance()->findAll());
+
 //        var_dump($userCount);
 //        var_dump($totalEntries);
 //        exit;
