@@ -64,6 +64,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Submitted By</th>
+                                <td>Title</td>
                                 <th>Symptoms</th>
                                 <th>Description</th>
                                 <th>Location</th>
@@ -77,9 +78,10 @@
                                     <td>{{ data.entryDetailsObj.dateTime }}</td>
                                     {#<td>{{ data.getUserObj.getFirstname }} {{ data.getUserObj.getMiddlename }}</td>#}
                                     <td>{{ data.getUserid }}</td>
+                                    <td>{{ data.title }}</td>
                                     <td>{{ data.getSymptoms }}</td>
                                     <td>{{ data.getDescription }}</td>
-                                    <td>{{ data.getLocationcode }}</td>
+                                    <td>{{ data.locationObj.locationname}}</td>
                                 </tr>
                             {% endfor %}
 

@@ -30,6 +30,7 @@ class AdminController extends DefaultController
         $title = 'dashboard';
         $user = $this->getUser();
         $recentData = DiseaseDataRepository::getInstance()->findAll('datetime');
+//        exit;
 //        print_r($recentData);
         return $this->render('default/adminDashboard.html.twig', array(
             'userCount'=>$userCount,

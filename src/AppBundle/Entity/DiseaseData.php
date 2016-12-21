@@ -22,6 +22,23 @@ class DiseaseData extends AbstractEntity
     private $locationcode;
     private $entryid;
     private $entryDetailsObj;
+    private $locationObj;
+
+    /**
+     * @return mixed
+     */
+    public function getLocationObj()
+    {
+        return $this->locationObj;
+    }
+
+    /**
+     * @param mixed $locationObj
+     */
+    public function setLocationObj($locationObj)
+    {
+        $this->locationObj = $locationObj;
+    }
 
     /**
      * @return mixed

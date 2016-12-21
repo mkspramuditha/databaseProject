@@ -153,7 +153,7 @@ class ApiController extends DefaultController
         $userDetails->setMiddlename($middleName);
         $userDetails->setLastname($lastName);
         $userDetails->setPhone($phone);
-        $userDetails->setEmail($email);
+//        $userDetails->setEmail($email);
 
         $this->db()->insert($userDetails);
 
